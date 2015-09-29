@@ -214,6 +214,8 @@
  *	from the file /etc/hostid, rather than from hardware.
  */
 
+#include <sys/cdefs.h>
+
 __BEGIN_DECLS
 
 /*
@@ -233,7 +235,6 @@ __BEGIN_DECLS
 /*
  * Define the appropriate "processor characteristics"
  */
-#define	_LITTLE_ENDIAN
 #define	_STACK_GROWS_DOWNWARD
 #define	_LONG_LONG_LTOH
 #define	_BIT_FIELDS_LTOH
@@ -295,7 +296,6 @@ __BEGIN_DECLS
 /*
  * Define the appropriate "processor characteristics"
  */
-#define	_LITTLE_ENDIAN
 #define	_STACK_GROWS_DOWNWARD
 #define	_LONG_LONG_LTOH
 #define	_BIT_FIELDS_LTOH
@@ -378,7 +378,6 @@ __BEGIN_DECLS
  * Define the appropriate "processor characteristics" shared between
  * all Solaris on SPARC systems.
  */
-#define	_BIG_ENDIAN
 #define	_STACK_GROWS_DOWNWARD
 #define	_LONG_LONG_HTOL
 #define	_BIT_FIELDS_HTOL

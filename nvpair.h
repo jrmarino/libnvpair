@@ -29,8 +29,8 @@
 #include <sys/types.h>
 #include <sys/time.h>
 #include <sys/errno.h>
-#include <sys/type_compat.h>
 #include <stdarg.h>
+#include "type_compat.h"
 
 __BEGIN_DECLS
 

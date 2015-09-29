@@ -1,0 +1,23 @@
+SUNW_1.1 {
+};
+
+SUNW_1.1.1 {
+} SUNW_1.1;
+
+SUNW_1.2 {
+} SUNW_1.1.1;
+
+SUNW_1.2.1 {
+} SUNW_1.2;
+
+SUNW_1.2.2 {
+} SUNW_1.2.1;
+
+SUNW_1.3 {
+} SUNW_1.2.2;
+
+ILLUMOS_0.1 {
+} SUNW_1.3;
+
+SUNWprivate_1.1 {
+} ILLUMOS_0.1;

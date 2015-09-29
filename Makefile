@@ -1,35 +1,23 @@
-CC = /usr/bin/gcc
-DEBUG_FLAGS =	-g
-WARN_FLAGS =	-Wall
-PIC_FLAGS =	-fPIC
-OPT_FLAGS =	-O2
-C_STDFLAGS =	-std=c99
+#
+# Use base mk files to generate libraries (DragonFly and FreeBSD)
+#
 
-CFLAGS =	$(DEBUG_FLAGS) \
-		$(WARN_FLAGS) \
-		$(PIC_FLAGS) \
-		$(OPT_FLAGS) \
-		$(C_STDFLAGS)
+LIB=		nvpair
+SHLIB_MAJOR=	1
+SRCS=		libnvpair.c \
+		nvpair_alloc_system.c \
+		nvpair_alloc_fixed.c \
+		nvpair.c \
+		nvpair_json.c
 
-STD_DEFS =	-D_GNU_SOURCE -D__EXTENSION__
-LF64_DEFS =	-D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64
-PIC_DEFS =	-DPIC
+STD_DEFS=	-D_GNU_SOURCE -D__EXTENSION__
+LF64_DEFS=	-D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64
+CFLAGS+=	$(STD_DEFS) $(LF64_DEFS)
 
-CPPFLAGS =	$(STD_DEFS) $(LF64_DEFS) $(PIC_DEFS)
+VERSION_DEF=	${.CURDIR}/Versions.def
+SYMBOL_MAPS=	${.CURDIR}/mapfile-vers
 
-SRCS =	nvpair.c \
-	nvpair_alloc_system.c \
-	libnvpair.c
+NOPROFILE=	yes
+NO_PROFILE=	yes
 
-OBJS =	$(SRCS:.c=.o)
-
-all: libnvpair.a
-
-libnvpair.a: $(OBJS)
-	ar rcs libnvpair.a $(OBJS)
-
-%.o: %.c
-	$(CC) $(CPPFLAGS) $(CFLAGS) -c -o $@ $<
-
-clean:
-	rm -f $(OBJS) libnvpair.a
+.include <bsd.lib.mk>
