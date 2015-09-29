@@ -214,9 +214,7 @@
  *	from the file /etc/hostid, rather than from hardware.
  */
 
-#ifdef	__cplusplus
-extern "C" {
-#endif
+__BEGIN_DECLS
 
 /*
  * The following set of definitions characterize Solaris on AMD's
@@ -267,9 +265,6 @@ extern "C" {
  */
 #if !defined(_LP64)
 #define	_LP64
-#endif
-#if !defined(_I32LPx) && defined(_KERNEL)
-#define	_I32LPx
 #endif
 #define	_MULTI_DATAMODEL
 #define	_SUNOS_VTOC_16
@@ -328,9 +323,6 @@ extern "C" {
  * Define the appropriate "implementation choices".
  */
 #define	_ILP32
-#if !defined(_I32LPx) && defined(_KERNEL)
-#define	_I32LPx
-#endif
 #define	_SUNOS_VTOC_16
 #define	_DMA_USES_PHYSADDR
 #define	_FIRMWARE_NEEDS_FDISK
@@ -433,9 +425,6 @@ extern "C" {
  * Define the appropriate "implementation choices"
  */
 #define	_ILP32
-#if !defined(_I32LPx) && defined(_KERNEL)
-#define	_I32LPx
-#endif
 
 /*
  * The following set of definitions characterize the implementation of
@@ -480,8 +469,6 @@ extern "C" {
 #error "Both _ILP32 and _LP64 are defined"
 #endif
 
-#ifdef	__cplusplus
-}
-#endif
+__END_DECLS
 
 #endif	/* _SYS_ISA_DEFS_H */

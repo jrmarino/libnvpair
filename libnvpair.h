@@ -20,6 +20,7 @@
  */
 /*
  * Copyright (c) 2000, 2010, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2013, Joyent, Inc. All rights reserved.
  */
 
 #ifndef	_LIBNVPAIR_H
@@ -30,9 +31,7 @@
 #include <stdio.h>
 #include <regex.h>
 
-#ifdef	__cplusplus
-extern "C" {
-#endif
+__BEGIN_DECLS
 
 /*
  * All interfaces described in this file are private to Solaris, and
@@ -46,6 +45,7 @@ extern int nvpair_value_match_regex(nvpair_t *, int, char *, regex_t *,
     char **);
 
 extern void nvlist_print(FILE *, nvlist_t *);
+extern int nvlist_print_json(FILE *, nvlist_t *);
 extern void dump_nvlist(nvlist_t *, int);
 
 /*
@@ -187,8 +187,6 @@ NVLIST_PRINTCTL_AVDECL(nvlist_prtctlop_nvlist_array, nvlist_t **);
 
 #undef	NVLIST_PRINTCTL_AVDECL	/* was just for "clarity" above */
 
-#ifdef	__cplusplus
-}
-#endif
+__END_DECLS
 
 #endif	/* _LIBNVPAIR_H */

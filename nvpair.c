@@ -23,34 +23,29 @@
  * Copyright (c) 2000, 2010, Oracle and/or its affiliates. All rights reserved.
  */
 
-#if !defined(__APPLE__)
+#if ! (defined __FreeBSD__ || defined __DragonFly__)
 #include <sys/stropts.h>
 #endif
-//#include <sys/debug.h>
 #include <assert.h>
-#define ASSERT(x) assert(x)
 #include "isa_defs.h"
 #include <inttypes.h>
 #include "nvpair.h"
 #include "nvpair_impl.h"
-//#include <rpc/types.h>
-//#include <rpc/xdr.h>
+#ifdef XDR_SUPPORTED
+#include <rpc/types.h>
+#include <rpc/xdr.h>
+#endif
 
-#if defined(_KERNEL) && !defined(_BOOT)
-#include <stdarg.h>
-#include <sys/ddi.h>
-#include <sys/sunddi.h>
-#else
 #include <stdarg.h>
 #include <stdlib.h>
 #include <string.h>
 #include <strings.h>
-#endif
 
 #ifndef	offsetof
 #define	offsetof(s, m)		((size_t)(&(((s *)0)->m)))
 #endif
 #define	skip_whitespace(p)	while ((*(p) == ' ') || (*(p) == '\t')) p++
+#define ASSERT(x) assert(x)
 
 /*
  * nvpair.c - Provides kernel & userland interfaces for manipulating
@@ -273,12 +268,7 @@ nvlist_nvflag(nvlist_t *nvl)
 int
 nvlist_alloc(nvlist_t **nvlp, uint_t nvflag, int kmflag)
 {
-#if defined(_KERNEL) && !defined(_BOOT)
-	return (nvlist_xalloc(nvlp, nvflag,
-	    (kmflag == KM_SLEEP ? nv_alloc_sleep : nv_alloc_nosleep)));
-#else
 	return (nvlist_xalloc(nvlp, nvflag, nv_alloc_nosleep));
-#endif
 }
 
 int
@@ -409,9 +399,7 @@ i_validate_type_nelem(data_type_t type, uint_t nelem)
 	case DATA_TYPE_STRING:
 	case DATA_TYPE_HRTIME:
 	case DATA_TYPE_NVLIST:
-#if !defined(_KERNEL)
 	case DATA_TYPE_DOUBLE:
-#endif
 		if (nelem != 1)
 			return (EINVAL);
 		break;
@@ -609,12 +597,7 @@ nvlist_contains_nvp(nvlist_t *nvl, nvpair_t *nvp)
 int
 nvlist_dup(nvlist_t *nvl, nvlist_t **nvlp, int kmflag)
 {
-#if defined(_KERNEL) && !defined(_BOOT)
-	return (nvlist_xdup(nvl, nvlp,
-	    (kmflag == KM_SLEEP ? nv_alloc_sleep : nv_alloc_nosleep)));
-#else
 	return (nvlist_xdup(nvl, nvlp, nv_alloc_nosleep));
-#endif
 }
 
 int
@@ -762,11 +745,9 @@ i_get_value_size(data_type_t type, const void *data, uint_t nelem)
 	case DATA_TYPE_UINT64:
 		value_sz = sizeof (uint64_t);
 		break;
-#if !defined(_KERNEL)
 	case DATA_TYPE_DOUBLE:
 		value_sz = sizeof (double);
 		break;
-#endif
 	case DATA_TYPE_STRING:
 		if (data == NULL)
 			value_sz = 0;
@@ -1051,13 +1032,11 @@ nvlist_add_uint64(nvlist_t *nvl, const char *name, uint64_t val)
 	return (nvlist_add_common(nvl, name, DATA_TYPE_UINT64, 1, &val));
 }
 
-#if !defined(_KERNEL)
 int
 nvlist_add_double(nvlist_t *nvl, const char *name, double val)
 {
 	return (nvlist_add_common(nvl, name, DATA_TYPE_DOUBLE, 1, &val));
 }
-#endif
 
 int
 nvlist_add_string(nvlist_t *nvl, const char *name, const char *val)
@@ -1277,9 +1256,7 @@ nvpair_value_common(nvpair_t *nvp, data_type_t type, uint_t *nelem, void *data)
 	case DATA_TYPE_INT64:
 	case DATA_TYPE_UINT64:
 	case DATA_TYPE_HRTIME:
-#if !defined(_KERNEL)
 	case DATA_TYPE_DOUBLE:
-#endif
 		if (data == NULL)
 			return (EINVAL);
 		bcopy(NVP_VALUE(nvp), data,
@@ -1416,13 +1393,11 @@ nvlist_lookup_uint64(nvlist_t *nvl, const char *name, uint64_t *val)
 	return (nvlist_lookup_common(nvl, name, DATA_TYPE_UINT64, NULL, val));
 }
 
-#if !defined(_KERNEL)
 int
 nvlist_lookup_double(nvlist_t *nvl, const char *name, double *val)
 {
 	return (nvlist_lookup_common(nvl, name, DATA_TYPE_DOUBLE, NULL, val));
 }
-#endif
 
 int
 nvlist_lookup_string(nvlist_t *nvl, const char *name, char **val)
@@ -1558,9 +1533,7 @@ nvlist_lookup_pairs(nvlist_t *nvl, int flag, ...)
 		case DATA_TYPE_HRTIME:
 		case DATA_TYPE_STRING:
 		case DATA_TYPE_NVLIST:
-#if !defined(_KERNEL)
 		case DATA_TYPE_DOUBLE:
-#endif
 			val = va_arg(ap, void *);
 			ret = nvlist_lookup_common(nvl, name, type, NULL, val);
 			break;
@@ -1668,12 +1641,7 @@ nvlist_lookup_nvpair_ei_sep(nvlist_t *nvl, const char *name, const char sep,
 			sepp = idxp;
 
 			/* determine the index value */
-#if defined(_KERNEL) && !defined(_BOOT)
-			if (ddi_strtol(idxp, &idxep, 0, &idx))
-				goto fail;
-#else
 			idx = strtol(idxp, &idxep, 0);
-#endif
 			if (idxep == idxp)
 				goto fail;
 
@@ -1874,13 +1842,11 @@ nvpair_value_uint64(nvpair_t *nvp, uint64_t *val)
 	return (nvpair_value_common(nvp, DATA_TYPE_UINT64, NULL, val));
 }
 
-#if !defined(_KERNEL)
 int
 nvpair_value_double(nvpair_t *nvp, double *val)
 {
 	return (nvpair_value_common(nvp, DATA_TYPE_DOUBLE, NULL, val));
 }
-#endif
 
 int
 nvpair_value_string(nvpair_t *nvp, char **val)
@@ -2248,7 +2214,9 @@ nvs_embedded_nvl_array(nvstream_t *nvs, nvpair_t *nvp, size_t *size)
 }
 
 static int nvs_native(nvstream_t *, nvlist_t *, char *, size_t *);
-//static int nvs_xdr(nvstream_t *, nvlist_t *, char *, size_t *);
+#ifdef XDR_SUPPORTED
+static int nvs_xdr(nvstream_t *, nvlist_t *, char *, size_t *);
+#endif
 
 /*
  * Common routine for nvlist operations:
@@ -2325,9 +2293,11 @@ nvlist_common(nvlist_t *nvl, char *buf, size_t *buflen, int encoding,
 			return (ENOTSUP);
 		err = nvs_native(&nvs, nvl, buf, buflen);
 		break;
-//	case NV_ENCODE_XDR:
-//		err = nvs_xdr(&nvs, nvl, buf, buflen);
-//		break;
+#ifdef XDR_SUPPORTED
+	case NV_ENCODE_XDR:
+		err = nvs_xdr(&nvs, nvl, buf, buflen);
+		break;
+#endif
 	default:
 		err = ENOTSUP;
 		break;
@@ -2350,12 +2320,7 @@ int
 nvlist_pack(nvlist_t *nvl, char **bufp, size_t *buflen, int encoding,
     int kmflag)
 {
-#if defined(_KERNEL) && !defined(_BOOT)
-	return (nvlist_xpack(nvl, bufp, buflen, encoding,
-	    (kmflag == KM_SLEEP ? nv_alloc_sleep : nv_alloc_nosleep)));
-#else
 	return (nvlist_xpack(nvl, bufp, buflen, encoding, nv_alloc_nosleep));
-#endif
 }
 
 int
@@ -2412,12 +2377,7 @@ nvlist_xpack(nvlist_t *nvl, char **bufp, size_t *buflen, int encoding,
 int
 nvlist_unpack(char *buf, size_t buflen, nvlist_t **nvlp, int kmflag)
 {
-#if defined(_KERNEL) && !defined(_BOOT)
-	return (nvlist_xunpack(buf, buflen, nvlp,
-	    (kmflag == KM_SLEEP ? nv_alloc_sleep : nv_alloc_nosleep)));
-#else
 	return (nvlist_xunpack(buf, buflen, nvlp, nv_alloc_nosleep));
-#endif
 }
 
 int
@@ -2814,7 +2774,8 @@ nvs_native(nvstream_t *nvs, nvlist_t *nvl, char *buf, size_t *buflen)
 
 	return (err);
 }
-#if 0
+
+#ifdef XDR_SUPPORTED
 /*
  * XDR encoding functions
  *
@@ -3019,11 +2980,9 @@ nvs_xdr_nvp_op(nvstream_t *nvs, nvpair_t *nvp)
 		 */
 		ret = xdr_longlong_t(xdr, (void *)buf);
 		break;
-#if !defined(_KERNEL)
 	case DATA_TYPE_DOUBLE:
 		ret = xdr_double(xdr, (void *)buf);
 		break;
-#endif
 	case DATA_TYPE_STRING:
 		ret = xdr_string(xdr, &buf, buflen - 1);
 		break;
@@ -3129,9 +3088,7 @@ nvs_xdr_nvp_size(nvstream_t *nvs, nvpair_t *nvp, size_t *size)
 	case DATA_TYPE_INT64:
 	case DATA_TYPE_UINT64:
 	case DATA_TYPE_HRTIME:
-#if !defined(_KERNEL)
 	case DATA_TYPE_DOUBLE:
-#endif
 		nvp_sz += 8;
 		break;
 
