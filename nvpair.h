@@ -30,7 +30,7 @@
 #include <sys/time.h>
 #include <sys/errno.h>
 #include <stdarg.h>
-#include "type_compat.h"
+#include "nvpair_type_compat.h"
 
 __BEGIN_DECLS
 
