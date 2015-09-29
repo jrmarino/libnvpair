@@ -29,28 +29,10 @@
 #include <sys/types.h>
 #include <sys/time.h>
 #include <sys/errno.h>
+#include <sys/type_compat.h>
 #include <stdarg.h>
-#include <inttypes.h>
 
-#if defined(_KERNEL) && !defined(_BOOT)
-#include <sys/kmem.h>
-#endif
-
-#if !defined(TEXT_DOMAIN)
-#define TEXT_DOMAIN "SYS_TEST"
-#endif
-
-typedef unsigned int	uint_t;
-typedef unsigned char	uchar_t;
-typedef long long	longlong_t;
-typedef longlong_t	hrtime_t;
-typedef unsigned long	ulong_t;
-typedef unsigned long long	u_longlong_t;
-typedef enum { B_FALSE, B_TRUE } boolean_t;
-
-#ifdef	__cplusplus
-extern "C" {
-#endif
+__BEGIN_DECLS
 
 typedef enum {
 	DATA_TYPE_UNKNOWN = 0,
@@ -79,12 +61,8 @@ typedef enum {
 	DATA_TYPE_UINT8,
 	DATA_TYPE_BOOLEAN_ARRAY,
 	DATA_TYPE_INT8_ARRAY,
-#if !defined(_KERNEL)
 	DATA_TYPE_UINT8_ARRAY,
 	DATA_TYPE_DOUBLE
-#else
-	DATA_TYPE_UINT8_ARRAY
-#endif
 } data_type_t;
 
 typedef struct nvpair {
@@ -155,10 +133,6 @@ struct nv_alloc_ops {
 extern const nv_alloc_ops_t *nv_fixed_ops;
 extern nv_alloc_t *nv_alloc_nosleep;
 
-#if defined(_KERNEL) && !defined(_BOOT)
-extern nv_alloc_t *nv_alloc_sleep;
-#endif
-
 int nv_alloc_init(nv_alloc_t *, const nv_alloc_ops_t *, /* args */ ...);
 void nv_alloc_reset(nv_alloc_t *);
 void nv_alloc_fini(nv_alloc_t *);
@@ -207,9 +181,7 @@ int nvlist_add_uint64_array(nvlist_t *, const char *, uint64_t *, uint_t);
 int nvlist_add_string_array(nvlist_t *, const char *, char *const *, uint_t);
 int nvlist_add_nvlist_array(nvlist_t *, const char *, nvlist_t **, uint_t);
 int nvlist_add_hrtime(nvlist_t *, const char *, hrtime_t);
-#if !defined(_KERNEL)
 int nvlist_add_double(nvlist_t *, const char *, double);
-#endif
 
 int nvlist_remove(nvlist_t *, const char *, data_type_t);
 int nvlist_remove_all(nvlist_t *, const char *);
@@ -244,9 +216,7 @@ int nvlist_lookup_nvlist_array(nvlist_t *, const char *,
     nvlist_t ***, uint_t *);
 int nvlist_lookup_hrtime(nvlist_t *, const char *, hrtime_t *);
 int nvlist_lookup_pairs(nvlist_t *, int, ...);
-#if !defined(_KERNEL)
 int nvlist_lookup_double(nvlist_t *, const char *, double *);
-#endif
 
 int nvlist_lookup_nvpair(nvlist_t *, const char *, nvpair_t **);
 int nvlist_lookup_nvpair_embedded_index(nvlist_t *, const char *, nvpair_t **,
@@ -285,9 +255,7 @@ int nvpair_value_uint64_array(nvpair_t *, uint64_t **, uint_t *);
 int nvpair_value_string_array(nvpair_t *, char ***, uint_t *);
 int nvpair_value_nvlist_array(nvpair_t *, nvlist_t ***, uint_t *);
 int nvpair_value_hrtime(nvpair_t *, hrtime_t *);
-#if !defined(_KERNEL)
 int nvpair_value_double(nvpair_t *, double *);
-#endif
 
 nvlist_t *fnvlist_alloc(void);
 void fnvlist_free(nvlist_t *);
@@ -297,6 +265,7 @@ void fnvlist_pack_free(char *, size_t);
 nvlist_t *fnvlist_unpack(char *, size_t);
 nvlist_t *fnvlist_dup(nvlist_t *);
 void fnvlist_merge(nvlist_t *, nvlist_t *);
+size_t fnvlist_num_pairs(nvlist_t *);
 
 void fnvlist_add_boolean(nvlist_t *, const char *);
 void fnvlist_add_boolean_value(nvlist_t *, const char *, boolean_t);
@@ -356,8 +325,6 @@ uint64_t fnvpair_value_uint64(nvpair_t *nvp);
 char *fnvpair_value_string(nvpair_t *nvp);
 nvlist_t *fnvpair_value_nvlist(nvpair_t *nvp);
 
-#ifdef	__cplusplus
-}
-#endif
+__END_DECLS
 
 #endif	/* _SYS_NVPAIR_H */

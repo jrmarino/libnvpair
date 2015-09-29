@@ -27,9 +27,7 @@
 #ifndef	_NVPAIR_IMPL_H
 #define	_NVPAIR_IMPL_H
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+__BEGIN_DECLS
 
 #include "nvpair.h"
 
@@ -64,8 +62,6 @@ typedef struct {
 	uint32_t	nvp_stat;	/* internal state */
 } nvpriv_t;
 
-#ifdef	__cplusplus
-}
-#endif
+__END_DECLS
 
 #endif	/* _NVPAIR_IMPL_H */
