@@ -266,7 +266,7 @@ nvlist_nvflag(nvlist_t *nvl)
  */
 /*ARGSUSED1*/
 int
-nvlist_alloc(nvlist_t **nvlp, uint_t nvflag, int kmflag)
+nvlist_alloc(nvlist_t **nvlp, uint_t nvflag, int kmflag __unused)
 {
 	return (nvlist_xalloc(nvlp, nvflag, nv_alloc_nosleep));
 }
@@ -595,7 +595,7 @@ nvlist_contains_nvp(nvlist_t *nvl, nvpair_t *nvp)
  */
 /*ARGSUSED1*/
 int
-nvlist_dup(nvlist_t *nvl, nvlist_t **nvlp, int kmflag)
+nvlist_dup(nvlist_t *nvl, nvlist_t **nvlp, int kmflag __unused)
 {
 	return (nvlist_xdup(nvl, nvlp, nv_alloc_nosleep));
 }
@@ -2318,7 +2318,7 @@ nvlist_size(nvlist_t *nvl, size_t *size, int encoding)
 /*ARGSUSED1*/
 int
 nvlist_pack(nvlist_t *nvl, char **bufp, size_t *buflen, int encoding,
-    int kmflag)
+    int kmflag __unused)
 {
 	return (nvlist_xpack(nvl, bufp, buflen, encoding, nv_alloc_nosleep));
 }
@@ -2375,7 +2375,7 @@ nvlist_xpack(nvlist_t *nvl, char **bufp, size_t *buflen, int encoding,
  */
 /*ARGSUSED1*/
 int
-nvlist_unpack(char *buf, size_t buflen, nvlist_t **nvlp, int kmflag)
+nvlist_unpack(char *buf, size_t buflen, nvlist_t **nvlp, int kmflag __unused)
 {
 	return (nvlist_xunpack(buf, buflen, nvlp, nv_alloc_nosleep));
 }
