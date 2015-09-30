@@ -18,9 +18,14 @@ PIC_DEFS =      -DPIC
 
 CPPFLAGS =      $(LF64_DEFS) $(PIC_DEFS)
 
+all:	hello_nv dyn-hello_nv
 
-hellonv: hello_nv.c
-	$(CC) $(CPPFLAGS) $(CFLAGS) -o hello_nv hello_nv.c ../libnvpair.a
+hello_nv: hello_nv.c
+	$(CC) $(CPPFLAGS) $(CFLAGS) -o ${.TARGET} ${.ALLSRC} ../libnvpair.a
+
+dyn-hello_nv: hello_nv.c
+	$(CC) $(CPPFLAGS) $(CFLAGS) -o ${.TARGET} ${.ALLSRC} \
+		-L.. -R${.CURDIR:H} -lnvpair
 
 clean:
-	rm -rf $(OBJS) hello_nv hello_nv.dSYM/
+	rm -rf $(OBJS) hello_nv dyn-hello_nv
