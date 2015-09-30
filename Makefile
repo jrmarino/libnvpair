@@ -4,7 +4,8 @@
 
 LIB=		nvpair
 SHLIB_MAJOR=	1
-SRCS=		libnvpair.c \
+SRCS=		fnvpair.c \
+		libnvpair.c \
 		nvpair_alloc_system.c \
 		nvpair_alloc_fixed.c \
 		nvpair.c \
