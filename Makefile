@@ -10,9 +10,8 @@ SRCS=		libnvpair.c \
 		nvpair.c \
 		nvpair_json.c
 
-STD_DEFS=	-D_GNU_SOURCE -D__EXTENSION__
 LF64_DEFS=	-D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64
-CFLAGS+=	$(STD_DEFS) $(LF64_DEFS)
+CFLAGS+=	$(LF64_DEFS)
 
 VERSION_DEF=	${.CURDIR}/Versions.def
 SYMBOL_MAPS=	${.CURDIR}/mapfile-vers

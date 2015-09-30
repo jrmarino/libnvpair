@@ -13,11 +13,10 @@ CFLAGS =        $(DEBUG_FLAGS) \
                 $(C_STDFLAGS) \
 		$(INC_FLAGS)
 
-STD_DEFS =      -D_GNU_SOURCE -D__EXTENSION__
 LF64_DEFS =     -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64
 PIC_DEFS =      -DPIC
 
-CPPFLAGS =      $(STD_DEFS) $(LF64_DEFS) $(PIC_DEFS)
+CPPFLAGS =      $(LF64_DEFS) $(PIC_DEFS)
 
 
 hellonv: hello_nv.c
