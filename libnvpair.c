@@ -838,7 +838,7 @@ dump_nvlist(nvlist_t *list, int indent)
 			break;
 
 		case DATA_TYPE_UINT32:
-			NVP(elem, uint32, uint32_t, ulong_t, "%lu");
+			NVP(elem, uint32, uint32_t, u_long, "%lu");
 			break;
 
 		case DATA_TYPE_INT64:
@@ -878,7 +878,7 @@ dump_nvlist(nvlist_t *list, int indent)
 			break;
 
 		case DATA_TYPE_UINT32_ARRAY:
-			NVPA(elem, uint32_array, uint32_t, ulong_t, "%lu");
+			NVPA(elem, uint32_array, uint32_t, u_long, "%lu");
 			break;
 
 		case DATA_TYPE_INT64_ARRAY:

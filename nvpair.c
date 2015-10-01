@@ -2800,7 +2800,7 @@ static int
 nvs_xdr_create(nvstream_t *nvs, XDR *xdr, char *buf, size_t buflen)
 {
 	/* xdr data must be 4 byte aligned */
-	if ((ulong_t)buf % 4 != 0)
+	if ((u_long)buf % 4 != 0)
 		return (EFAULT);
 
 	switch (nvs->nvs_op) {
