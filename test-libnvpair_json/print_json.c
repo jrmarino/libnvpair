@@ -27,6 +27,9 @@
 #include <ctype.h>
 #include <limits.h>
 #include <locale.h>
+#ifdef __FreeBSD__
+#include <stdint.h>
+#endif
 
 #include "libnvpair.h"
 
