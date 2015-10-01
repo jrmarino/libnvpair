@@ -210,78 +210,78 @@ fnvlist_add_nvpair(nvlist_t *nvl, nvpair_t *pair)
 
 void
 fnvlist_add_boolean_array(nvlist_t *nvl, const char *name,
-    boolean_t *val, uint_t n)
+    boolean_t *val, uint32_t n)
 {
 	VERIFY0(nvlist_add_boolean_array(nvl, name, val, n));
 }
 
 void
-fnvlist_add_byte_array(nvlist_t *nvl, const char *name, uchar_t *val, uint_t n)
+fnvlist_add_byte_array(nvlist_t *nvl, const char *name, uchar_t *val, uint32_t n)
 {
 	VERIFY0(nvlist_add_byte_array(nvl, name, val, n));
 }
 
 void
-fnvlist_add_int8_array(nvlist_t *nvl, const char *name, int8_t *val, uint_t n)
+fnvlist_add_int8_array(nvlist_t *nvl, const char *name, int8_t *val, uint32_t n)
 {
 	VERIFY0(nvlist_add_int8_array(nvl, name, val, n));
 }
 
 void
-fnvlist_add_uint8_array(nvlist_t *nvl, const char *name, uint8_t *val, uint_t n)
+fnvlist_add_uint8_array(nvlist_t *nvl, const char *name, uint8_t *val, uint32_t n)
 {
 	VERIFY0(nvlist_add_uint8_array(nvl, name, val, n));
 }
 
 void
-fnvlist_add_int16_array(nvlist_t *nvl, const char *name, int16_t *val, uint_t n)
+fnvlist_add_int16_array(nvlist_t *nvl, const char *name, int16_t *val, uint32_t n)
 {
 	VERIFY0(nvlist_add_int16_array(nvl, name, val, n));
 }
 
 void
 fnvlist_add_uint16_array(nvlist_t *nvl, const char *name,
-    uint16_t *val, uint_t n)
+    uint16_t *val, uint32_t n)
 {
 	VERIFY0(nvlist_add_uint16_array(nvl, name, val, n));
 }
 
 void
-fnvlist_add_int32_array(nvlist_t *nvl, const char *name, int32_t *val, uint_t n)
+fnvlist_add_int32_array(nvlist_t *nvl, const char *name, int32_t *val, uint32_t n)
 {
 	VERIFY0(nvlist_add_int32_array(nvl, name, val, n));
 }
 
 void
 fnvlist_add_uint32_array(nvlist_t *nvl, const char *name,
-    uint32_t *val, uint_t n)
+    uint32_t *val, uint32_t n)
 {
 	VERIFY0(nvlist_add_uint32_array(nvl, name, val, n));
 }
 
 void
-fnvlist_add_int64_array(nvlist_t *nvl, const char *name, int64_t *val, uint_t n)
+fnvlist_add_int64_array(nvlist_t *nvl, const char *name, int64_t *val, uint32_t n)
 {
 	VERIFY0(nvlist_add_int64_array(nvl, name, val, n));
 }
 
 void
 fnvlist_add_uint64_array(nvlist_t *nvl, const char *name,
-    uint64_t *val, uint_t n)
+    uint64_t *val, uint32_t n)
 {
 	VERIFY0(nvlist_add_uint64_array(nvl, name, val, n));
 }
 
 void
 fnvlist_add_string_array(nvlist_t *nvl, const char *name,
-    char * const *val, uint_t n)
+    char * const *val, uint32_t n)
 {
 	VERIFY0(nvlist_add_string_array(nvl, name, val, n));
 }
 
 void
 fnvlist_add_nvlist_array(nvlist_t *nvl, const char *name,
-    nvlist_t **val, uint_t n)
+    nvlist_t **val, uint32_t n)
 {
 	VERIFY0(nvlist_add_nvlist_array(nvl, name, val, n));
 }

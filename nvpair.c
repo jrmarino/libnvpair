@@ -125,9 +125,9 @@
 #define	NVP_SIZE_CALC(name_len, data_len) \
 	(NV_ALIGN((sizeof (nvpair_t)) + name_len) + NV_ALIGN(data_len))
 
-static int i_get_value_size(data_type_t type, const void *data, uint_t nelem);
+static int i_get_value_size(data_type_t type, const void *data, uint32_t nelem);
 static int nvlist_add_common(nvlist_t *nvl, const char *name, data_type_t type,
-    uint_t nelem, const void *data);
+    uint32_t nelem, const void *data);
 
 #define	NV_STAT_EMBEDDED	0x1
 #define	EMBEDDED_NVL(nvp)	((nvlist_t *)(void *)NVP_VALUE(nvp))
@@ -255,7 +255,7 @@ nvlist_init(nvlist_t *nvl, uint32_t nvflag, nvpriv_t *priv)
 	nvl->nvl_pad = 0;
 }
 
-uint_t
+uint32_t
 nvlist_nvflag(nvlist_t *nvl)
 {
 	return (nvl->nvl_nvflag);
@@ -266,13 +266,13 @@ nvlist_nvflag(nvlist_t *nvl)
  */
 /*ARGSUSED1*/
 int
-nvlist_alloc(nvlist_t **nvlp, uint_t nvflag, int kmflag __unused)
+nvlist_alloc(nvlist_t **nvlp, uint32_t nvflag, int kmflag __unused)
 {
 	return (nvlist_xalloc(nvlp, nvflag, nv_alloc_nosleep));
 }
 
 int
-nvlist_xalloc(nvlist_t **nvlp, uint_t nvflag, nv_alloc_t *nva)
+nvlist_xalloc(nvlist_t **nvlp, uint32_t nvflag, nv_alloc_t *nva)
 {
 	nvpriv_t *priv;
 
@@ -379,7 +379,7 @@ nvp_buf_unlink(nvlist_t *nvl, nvpair_t *nvp)
  * take a nvpair type and number of elements and make sure the are valid
  */
 static int
-i_validate_type_nelem(data_type_t type, uint_t nelem)
+i_validate_type_nelem(data_type_t type, uint32_t nelem)
 {
 	switch (type) {
 	case DATA_TYPE_BOOLEAN:
@@ -441,7 +441,7 @@ i_validate_nvpair_name(nvpair_t *nvp)
 }
 
 static int
-i_validate_nvpair_value(data_type_t type, uint_t nelem, const void *data)
+i_validate_nvpair_value(data_type_t type, uint32_t nelem, const void *data)
 {
 	switch (type) {
 	case DATA_TYPE_BOOLEAN_VALUE:
@@ -703,7 +703,7 @@ nvlist_remove_nvpair(nvlist_t *nvl, nvpair_t *nvp)
  * Is data == NULL then the size of the string(s) is excluded.
  */
 static int
-i_get_value_size(data_type_t type, const void *data, uint_t nelem)
+i_get_value_size(data_type_t type, const void *data, uint32_t nelem)
 {
 	uint64_t value_sz;
 
@@ -789,7 +789,7 @@ i_get_value_size(data_type_t type, const void *data, uint_t nelem)
 
 		if (data != NULL) {
 			char *const *strs = data;
-			uint_t i;
+			uint32_t i;
 
 			/* no alignment requirement for strings */
 			for (i = 0; i < nelem; i++) {
@@ -841,10 +841,10 @@ nvlist_copy_embedded(nvlist_t *nvl, nvlist_t *onvl, nvlist_t *emb_nvl)
  */
 static int
 nvlist_add_common(nvlist_t *nvl, const char *name,
-    data_type_t type, uint_t nelem, const void *data)
+    data_type_t type, uint32_t nelem, const void *data)
 {
 	nvpair_t *nvp;
-	uint_t i;
+	uint32_t i;
 
 	int nvp_sz, name_sz, value_sz;
 	int err = 0;
@@ -1046,68 +1046,68 @@ nvlist_add_string(nvlist_t *nvl, const char *name, const char *val)
 
 int
 nvlist_add_boolean_array(nvlist_t *nvl, const char *name,
-    boolean_t *a, uint_t n)
+    boolean_t *a, uint32_t n)
 {
 	return (nvlist_add_common(nvl, name, DATA_TYPE_BOOLEAN_ARRAY, n, a));
 }
 
 int
-nvlist_add_byte_array(nvlist_t *nvl, const char *name, uchar_t *a, uint_t n)
+nvlist_add_byte_array(nvlist_t *nvl, const char *name, uchar_t *a, uint32_t n)
 {
 	return (nvlist_add_common(nvl, name, DATA_TYPE_BYTE_ARRAY, n, a));
 }
 
 int
-nvlist_add_int8_array(nvlist_t *nvl, const char *name, int8_t *a, uint_t n)
+nvlist_add_int8_array(nvlist_t *nvl, const char *name, int8_t *a, uint32_t n)
 {
 	return (nvlist_add_common(nvl, name, DATA_TYPE_INT8_ARRAY, n, a));
 }
 
 int
-nvlist_add_uint8_array(nvlist_t *nvl, const char *name, uint8_t *a, uint_t n)
+nvlist_add_uint8_array(nvlist_t *nvl, const char *name, uint8_t *a, uint32_t n)
 {
 	return (nvlist_add_common(nvl, name, DATA_TYPE_UINT8_ARRAY, n, a));
 }
 
 int
-nvlist_add_int16_array(nvlist_t *nvl, const char *name, int16_t *a, uint_t n)
+nvlist_add_int16_array(nvlist_t *nvl, const char *name, int16_t *a, uint32_t n)
 {
 	return (nvlist_add_common(nvl, name, DATA_TYPE_INT16_ARRAY, n, a));
 }
 
 int
-nvlist_add_uint16_array(nvlist_t *nvl, const char *name, uint16_t *a, uint_t n)
+nvlist_add_uint16_array(nvlist_t *nvl, const char *name, uint16_t *a, uint32_t n)
 {
 	return (nvlist_add_common(nvl, name, DATA_TYPE_UINT16_ARRAY, n, a));
 }
 
 int
-nvlist_add_int32_array(nvlist_t *nvl, const char *name, int32_t *a, uint_t n)
+nvlist_add_int32_array(nvlist_t *nvl, const char *name, int32_t *a, uint32_t n)
 {
 	return (nvlist_add_common(nvl, name, DATA_TYPE_INT32_ARRAY, n, a));
 }
 
 int
-nvlist_add_uint32_array(nvlist_t *nvl, const char *name, uint32_t *a, uint_t n)
+nvlist_add_uint32_array(nvlist_t *nvl, const char *name, uint32_t *a, uint32_t n)
 {
 	return (nvlist_add_common(nvl, name, DATA_TYPE_UINT32_ARRAY, n, a));
 }
 
 int
-nvlist_add_int64_array(nvlist_t *nvl, const char *name, int64_t *a, uint_t n)
+nvlist_add_int64_array(nvlist_t *nvl, const char *name, int64_t *a, uint32_t n)
 {
 	return (nvlist_add_common(nvl, name, DATA_TYPE_INT64_ARRAY, n, a));
 }
 
 int
-nvlist_add_uint64_array(nvlist_t *nvl, const char *name, uint64_t *a, uint_t n)
+nvlist_add_uint64_array(nvlist_t *nvl, const char *name, uint64_t *a, uint32_t n)
 {
 	return (nvlist_add_common(nvl, name, DATA_TYPE_UINT64_ARRAY, n, a));
 }
 
 int
 nvlist_add_string_array(nvlist_t *nvl, const char *name,
-    char *const *a, uint_t n)
+    char *const *a, uint32_t n)
 {
 	return (nvlist_add_common(nvl, name, DATA_TYPE_STRING_ARRAY, n, a));
 }
@@ -1125,7 +1125,7 @@ nvlist_add_nvlist(nvlist_t *nvl, const char *name, nvlist_t *val)
 }
 
 int
-nvlist_add_nvlist_array(nvlist_t *nvl, const char *name, nvlist_t **a, uint_t n)
+nvlist_add_nvlist_array(nvlist_t *nvl, const char *name, nvlist_t **a, uint32_t n)
 {
 	return (nvlist_add_common(nvl, name, DATA_TYPE_NVLIST_ARRAY, n, a));
 }
@@ -1230,7 +1230,7 @@ nvpair_type_is_array(nvpair_t *nvp)
 }
 
 static int
-nvpair_value_common(nvpair_t *nvp, data_type_t type, uint_t *nelem, void *data)
+nvpair_value_common(nvpair_t *nvp, data_type_t type, uint32_t *nelem, void *data)
 {
 	if (nvp == NULL || nvpair_type(nvp) != type)
 		return (EINVAL);
@@ -1303,7 +1303,7 @@ nvpair_value_common(nvpair_t *nvp, data_type_t type, uint_t *nelem, void *data)
 
 static int
 nvlist_lookup_common(nvlist_t *nvl, const char *name, data_type_t type,
-    uint_t *nelem, void *data)
+    uint32_t *nelem, void *data)
 {
 	nvpriv_t *priv;
 	nvpair_t *nvp;
@@ -1413,7 +1413,7 @@ nvlist_lookup_nvlist(nvlist_t *nvl, const char *name, nvlist_t **val)
 
 int
 nvlist_lookup_boolean_array(nvlist_t *nvl, const char *name,
-    boolean_t **a, uint_t *n)
+    boolean_t **a, uint32_t *n)
 {
 	return (nvlist_lookup_common(nvl, name,
 	    DATA_TYPE_BOOLEAN_ARRAY, n, a));
@@ -1421,76 +1421,76 @@ nvlist_lookup_boolean_array(nvlist_t *nvl, const char *name,
 
 int
 nvlist_lookup_byte_array(nvlist_t *nvl, const char *name,
-    uchar_t **a, uint_t *n)
+    uchar_t **a, uint32_t *n)
 {
 	return (nvlist_lookup_common(nvl, name, DATA_TYPE_BYTE_ARRAY, n, a));
 }
 
 int
-nvlist_lookup_int8_array(nvlist_t *nvl, const char *name, int8_t **a, uint_t *n)
+nvlist_lookup_int8_array(nvlist_t *nvl, const char *name, int8_t **a, uint32_t *n)
 {
 	return (nvlist_lookup_common(nvl, name, DATA_TYPE_INT8_ARRAY, n, a));
 }
 
 int
 nvlist_lookup_uint8_array(nvlist_t *nvl, const char *name,
-    uint8_t **a, uint_t *n)
+    uint8_t **a, uint32_t *n)
 {
 	return (nvlist_lookup_common(nvl, name, DATA_TYPE_UINT8_ARRAY, n, a));
 }
 
 int
 nvlist_lookup_int16_array(nvlist_t *nvl, const char *name,
-    int16_t **a, uint_t *n)
+    int16_t **a, uint32_t *n)
 {
 	return (nvlist_lookup_common(nvl, name, DATA_TYPE_INT16_ARRAY, n, a));
 }
 
 int
 nvlist_lookup_uint16_array(nvlist_t *nvl, const char *name,
-    uint16_t **a, uint_t *n)
+    uint16_t **a, uint32_t *n)
 {
 	return (nvlist_lookup_common(nvl, name, DATA_TYPE_UINT16_ARRAY, n, a));
 }
 
 int
 nvlist_lookup_int32_array(nvlist_t *nvl, const char *name,
-    int32_t **a, uint_t *n)
+    int32_t **a, uint32_t *n)
 {
 	return (nvlist_lookup_common(nvl, name, DATA_TYPE_INT32_ARRAY, n, a));
 }
 
 int
 nvlist_lookup_uint32_array(nvlist_t *nvl, const char *name,
-    uint32_t **a, uint_t *n)
+    uint32_t **a, uint32_t *n)
 {
 	return (nvlist_lookup_common(nvl, name, DATA_TYPE_UINT32_ARRAY, n, a));
 }
 
 int
 nvlist_lookup_int64_array(nvlist_t *nvl, const char *name,
-    int64_t **a, uint_t *n)
+    int64_t **a, uint32_t *n)
 {
 	return (nvlist_lookup_common(nvl, name, DATA_TYPE_INT64_ARRAY, n, a));
 }
 
 int
 nvlist_lookup_uint64_array(nvlist_t *nvl, const char *name,
-    uint64_t **a, uint_t *n)
+    uint64_t **a, uint32_t *n)
 {
 	return (nvlist_lookup_common(nvl, name, DATA_TYPE_UINT64_ARRAY, n, a));
 }
 
 int
 nvlist_lookup_string_array(nvlist_t *nvl, const char *name,
-    char ***a, uint_t *n)
+    char ***a, uint32_t *n)
 {
 	return (nvlist_lookup_common(nvl, name, DATA_TYPE_STRING_ARRAY, n, a));
 }
 
 int
 nvlist_lookup_nvlist_array(nvlist_t *nvl, const char *name,
-    nvlist_t ***a, uint_t *n)
+    nvlist_t ***a, uint32_t *n)
 {
 	return (nvlist_lookup_common(nvl, name, DATA_TYPE_NVLIST_ARRAY, n, a));
 }
@@ -1513,7 +1513,7 @@ nvlist_lookup_pairs(nvlist_t *nvl, int flag, ...)
 	while (ret == 0 && (name = va_arg(ap, char *)) != NULL) {
 		data_type_t type;
 		void *val;
-		uint_t *nelem;
+		uint32_t *nelem;
 
 		switch (type = va_arg(ap, data_type_t)) {
 		case DATA_TYPE_BOOLEAN:
@@ -1551,7 +1551,7 @@ nvlist_lookup_pairs(nvlist_t *nvl, int flag, ...)
 		case DATA_TYPE_STRING_ARRAY:
 		case DATA_TYPE_NVLIST_ARRAY:
 			val = va_arg(ap, void *);
-			nelem = va_arg(ap, uint_t *);
+			nelem = va_arg(ap, uint32_t *);
 			ret = nvlist_lookup_common(nvl, name, type, nelem, val);
 			break;
 
@@ -1720,7 +1720,7 @@ nvlist_lookup_nvpair_ei_sep(nvlist_t *nvl, const char *name, const char sep,
 				break;
 			} else if (nvpair_type(nvp) == DATA_TYPE_NVLIST_ARRAY) {
 				(void) nvpair_value_nvlist_array(nvp,
-				    &nva, (uint_t *)&n);
+				    &nva, (uint32_t *)&n);
 				if ((n < 0) || (idx >= n))
 					goto fail;
 				nvl = nva[idx];
@@ -1861,73 +1861,73 @@ nvpair_value_nvlist(nvpair_t *nvp, nvlist_t **val)
 }
 
 int
-nvpair_value_boolean_array(nvpair_t *nvp, boolean_t **val, uint_t *nelem)
+nvpair_value_boolean_array(nvpair_t *nvp, boolean_t **val, uint32_t *nelem)
 {
 	return (nvpair_value_common(nvp, DATA_TYPE_BOOLEAN_ARRAY, nelem, val));
 }
 
 int
-nvpair_value_byte_array(nvpair_t *nvp, uchar_t **val, uint_t *nelem)
+nvpair_value_byte_array(nvpair_t *nvp, uchar_t **val, uint32_t *nelem)
 {
 	return (nvpair_value_common(nvp, DATA_TYPE_BYTE_ARRAY, nelem, val));
 }
 
 int
-nvpair_value_int8_array(nvpair_t *nvp, int8_t **val, uint_t *nelem)
+nvpair_value_int8_array(nvpair_t *nvp, int8_t **val, uint32_t *nelem)
 {
 	return (nvpair_value_common(nvp, DATA_TYPE_INT8_ARRAY, nelem, val));
 }
 
 int
-nvpair_value_uint8_array(nvpair_t *nvp, uint8_t **val, uint_t *nelem)
+nvpair_value_uint8_array(nvpair_t *nvp, uint8_t **val, uint32_t *nelem)
 {
 	return (nvpair_value_common(nvp, DATA_TYPE_UINT8_ARRAY, nelem, val));
 }
 
 int
-nvpair_value_int16_array(nvpair_t *nvp, int16_t **val, uint_t *nelem)
+nvpair_value_int16_array(nvpair_t *nvp, int16_t **val, uint32_t *nelem)
 {
 	return (nvpair_value_common(nvp, DATA_TYPE_INT16_ARRAY, nelem, val));
 }
 
 int
-nvpair_value_uint16_array(nvpair_t *nvp, uint16_t **val, uint_t *nelem)
+nvpair_value_uint16_array(nvpair_t *nvp, uint16_t **val, uint32_t *nelem)
 {
 	return (nvpair_value_common(nvp, DATA_TYPE_UINT16_ARRAY, nelem, val));
 }
 
 int
-nvpair_value_int32_array(nvpair_t *nvp, int32_t **val, uint_t *nelem)
+nvpair_value_int32_array(nvpair_t *nvp, int32_t **val, uint32_t *nelem)
 {
 	return (nvpair_value_common(nvp, DATA_TYPE_INT32_ARRAY, nelem, val));
 }
 
 int
-nvpair_value_uint32_array(nvpair_t *nvp, uint32_t **val, uint_t *nelem)
+nvpair_value_uint32_array(nvpair_t *nvp, uint32_t **val, uint32_t *nelem)
 {
 	return (nvpair_value_common(nvp, DATA_TYPE_UINT32_ARRAY, nelem, val));
 }
 
 int
-nvpair_value_int64_array(nvpair_t *nvp, int64_t **val, uint_t *nelem)
+nvpair_value_int64_array(nvpair_t *nvp, int64_t **val, uint32_t *nelem)
 {
 	return (nvpair_value_common(nvp, DATA_TYPE_INT64_ARRAY, nelem, val));
 }
 
 int
-nvpair_value_uint64_array(nvpair_t *nvp, uint64_t **val, uint_t *nelem)
+nvpair_value_uint64_array(nvpair_t *nvp, uint64_t **val, uint32_t *nelem)
 {
 	return (nvpair_value_common(nvp, DATA_TYPE_UINT64_ARRAY, nelem, val));
 }
 
 int
-nvpair_value_string_array(nvpair_t *nvp, char ***val, uint_t *nelem)
+nvpair_value_string_array(nvpair_t *nvp, char ***val, uint32_t *nelem)
 {
 	return (nvpair_value_common(nvp, DATA_TYPE_STRING_ARRAY, nelem, val));
 }
 
 int
-nvpair_value_nvlist_array(nvpair_t *nvp, nvlist_t ***val, uint_t *nelem)
+nvpair_value_nvlist_array(nvpair_t *nvp, nvlist_t ***val, uint32_t *nelem)
 {
 	return (nvpair_value_common(nvp, DATA_TYPE_NVLIST_ARRAY, nelem, val));
 }
@@ -2417,7 +2417,7 @@ typedef struct {
 	caddr_t n_base;
 	caddr_t n_end;
 	caddr_t n_curr;
-	uint_t  n_flag;
+	uint32_t  n_flag;
 } nvs_native_t;
 
 static int
@@ -2805,11 +2805,11 @@ nvs_xdr_create(nvstream_t *nvs, XDR *xdr, char *buf, size_t buflen)
 
 	switch (nvs->nvs_op) {
 	case NVS_OP_ENCODE:
-		xdrmem_create(xdr, buf, (uint_t)buflen, XDR_ENCODE);
+		xdrmem_create(xdr, buf, (uint32_t)buflen, XDR_ENCODE);
 		nvs->nvs_private = xdr;
 		return (0);
 	case NVS_OP_DECODE:
-		xdrmem_create(xdr, buf, (uint_t)buflen, XDR_DECODE);
+		xdrmem_create(xdr, buf, (uint32_t)buflen, XDR_DECODE);
 		nvs->nvs_private = xdr;
 		return (0);
 	case NVS_OP_GETSIZE:
@@ -2885,7 +2885,7 @@ nvs_xdr_nvp_op(nvstream_t *nvs, nvpair_t *nvp)
 	char	*buf;
 	char	*buf_end = (char *)nvp + nvp->nvp_size;
 	int	value_sz;
-	uint_t	nelem, buflen;
+	uint32_t	nelem, buflen;
 	bool_t	ret = FALSE;
 	XDR	*xdr = nvs->nvs_private;
 

@@ -224,7 +224,7 @@ nvlist_print_json(FILE *fp, nvlist_t *nvl)
 
 		case DATA_TYPE_STRING_ARRAY: {
 			char **val;
-			uint_t valsz, i;
+			uint32_t valsz, i;
 			ASSERT(nvpair_value_string_array(curr, &val, &valsz) == 0);
 			FPRINTF(fp, "[");
 			for (i = 0; i < valsz; i++) {
@@ -239,7 +239,7 @@ nvlist_print_json(FILE *fp, nvlist_t *nvl)
 
 		case DATA_TYPE_NVLIST_ARRAY: {
 			nvlist_t **val;
-			uint_t valsz, i;
+			uint32_t valsz, i;
 			ASSERT(nvpair_value_nvlist_array(curr, &val, &valsz) == 0);
 			FPRINTF(fp, "[");
 			for (i = 0; i < valsz; i++) {
@@ -254,7 +254,7 @@ nvlist_print_json(FILE *fp, nvlist_t *nvl)
 
 		case DATA_TYPE_BOOLEAN_ARRAY: {
 			boolean_t *val;
-			uint_t valsz, i;
+			uint32_t valsz, i;
 			ASSERT(nvpair_value_boolean_array(curr, &val, &valsz) == 0);
 			FPRINTF(fp, "[");
 			for (i = 0; i < valsz; i++) {
@@ -269,7 +269,7 @@ nvlist_print_json(FILE *fp, nvlist_t *nvl)
 
 		case DATA_TYPE_BYTE_ARRAY: {
 			uchar_t *val;
-			uint_t valsz, i;
+			uint32_t valsz, i;
 			ASSERT(nvpair_value_byte_array(curr, &val, &valsz) == 0);
 			FPRINTF(fp, "[");
 			for (i = 0; i < valsz; i++) {
@@ -283,7 +283,7 @@ nvlist_print_json(FILE *fp, nvlist_t *nvl)
 
 		case DATA_TYPE_UINT8_ARRAY: {
 			uint8_t *val;
-			uint_t valsz, i;
+			uint32_t valsz, i;
 			ASSERT(nvpair_value_uint8_array(curr, &val, &valsz) == 0);
 			FPRINTF(fp, "[");
 			for (i = 0; i < valsz; i++) {
@@ -297,7 +297,7 @@ nvlist_print_json(FILE *fp, nvlist_t *nvl)
 
 		case DATA_TYPE_INT8_ARRAY: {
 			int8_t *val;
-			uint_t valsz, i;
+			uint32_t valsz, i;
 			ASSERT(nvpair_value_int8_array(curr, &val, &valsz) == 0);
 			FPRINTF(fp, "[");
 			for (i = 0; i < valsz; i++) {
@@ -311,7 +311,7 @@ nvlist_print_json(FILE *fp, nvlist_t *nvl)
 
 		case DATA_TYPE_UINT16_ARRAY: {
 			uint16_t *val;
-			uint_t valsz, i;
+			uint32_t valsz, i;
 			ASSERT(nvpair_value_uint16_array(curr, &val, &valsz) == 0);
 			FPRINTF(fp, "[");
 			for (i = 0; i < valsz; i++) {
@@ -325,7 +325,7 @@ nvlist_print_json(FILE *fp, nvlist_t *nvl)
 
 		case DATA_TYPE_INT16_ARRAY: {
 			int16_t *val;
-			uint_t valsz, i;
+			uint32_t valsz, i;
 			ASSERT(nvpair_value_int16_array(curr, &val, &valsz) == 0);
 			FPRINTF(fp, "[");
 			for (i = 0; i < valsz; i++) {
@@ -339,7 +339,7 @@ nvlist_print_json(FILE *fp, nvlist_t *nvl)
 
 		case DATA_TYPE_UINT32_ARRAY: {
 			uint32_t *val;
-			uint_t valsz, i;
+			uint32_t valsz, i;
 			ASSERT(nvpair_value_uint32_array(curr, &val, &valsz) == 0);
 			FPRINTF(fp, "[");
 			for (i = 0; i < valsz; i++) {
@@ -353,7 +353,7 @@ nvlist_print_json(FILE *fp, nvlist_t *nvl)
 
 		case DATA_TYPE_INT32_ARRAY: {
 			int32_t *val;
-			uint_t valsz, i;
+			uint32_t valsz, i;
 			ASSERT(nvpair_value_int32_array(curr, &val, &valsz) == 0);
 			FPRINTF(fp, "[");
 			for (i = 0; i < valsz; i++) {
@@ -367,7 +367,7 @@ nvlist_print_json(FILE *fp, nvlist_t *nvl)
 
 		case DATA_TYPE_UINT64_ARRAY: {
 			uint64_t *val;
-			uint_t valsz, i;
+			uint32_t valsz, i;
 			ASSERT(nvpair_value_uint64_array(curr, &val, &valsz) == 0);
 			FPRINTF(fp, "[");
 			for (i = 0; i < valsz; i++) {
@@ -382,7 +382,7 @@ nvlist_print_json(FILE *fp, nvlist_t *nvl)
 
 		case DATA_TYPE_INT64_ARRAY: {
 			int64_t *val;
-			uint_t valsz, i;
+			uint32_t valsz, i;
 			ASSERT(nvpair_value_int64_array(curr, &val, &valsz) == 0);
 			FPRINTF(fp, "[");
 			for (i = 0; i < valsz; i++) {

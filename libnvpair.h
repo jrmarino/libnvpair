@@ -70,7 +70,7 @@ extern void dump_nvlist(nvlist_t *, int);
  *
  *	extern void nvlist_prtctl_xxx_array(nvlist_prtctl_t,
  *	    void (*)(nvlist_prtctl_t ctl, void *private, const char *name,
- *	    xxxtype value, uint_t count))
+ *	    xxxtype value, uint32_t count))
  *
  * where xxxtype is the C datatype corresponding to xxx, eg int8_t for "int8"
  * and char * for "string".  The function that is appointed to render the
@@ -163,13 +163,13 @@ NVLIST_PRINTCTL_SVDECL(nvlist_prtctlop_nvlist, nvlist_t *);
  * Function prototypes for interfaces that appoint a new rendering function
  * for array-valued nvlist members.
  *
- * One additional argument is taken: uint_t for the number of array elements
+ * One additional argument is taken: uint32_t for the number of array elements
  *
  * Return values as above.
  */
 #define	NVLIST_PRINTCTL_AVDECL(funcname, vtype) \
     extern void funcname(nvlist_prtctl_t, \
-    int (*)(nvlist_prtctl_t, void *, nvlist_t *, const char *, vtype, uint_t), \
+    int (*)(nvlist_prtctl_t, void *, nvlist_t *, const char *, vtype, uint32_t), \
     void *)
 
 NVLIST_PRINTCTL_AVDECL(nvlist_prtctlop_boolean_array, boolean_t *);

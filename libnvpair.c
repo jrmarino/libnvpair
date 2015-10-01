@@ -53,7 +53,7 @@
 #define	DEFINEARROP(opname, vtype) \
 	struct { \
 		int (*op)(struct nvlist_prtctl *, void *, nvlist_t *, \
-		    const char *, vtype, uint_t); \
+		    const char *, vtype, uint32_t); \
 		void *arg; \
 	} opname
 
@@ -221,10 +221,10 @@ NVLIST_PRTFUNC(hrtime, hrtime_t, hrtime_t, "0x%llx")
 #define	NVLIST_ARRPRTFUNC(type_and_variant, vtype, ptype, vfmt) \
 static int \
 nvaprint_##type_and_variant(nvlist_prtctl_t pctl, void *private, \
-    nvlist_t *nvl, const char *name, vtype *valuep, uint_t count) \
+    nvlist_t *nvl, const char *name, vtype *valuep, uint32_t count) \
 { \
 	FILE *fp = pctl->nvprt_fp; \
-	uint_t i; \
+	uint32_t i; \
 	NOTE(ARGUNUSED(private)) \
 	NOTE(ARGUNUSED(nvl)) \
 	for (i = 0; i < count; i++) { \
@@ -276,10 +276,10 @@ nvprint_nvlist(nvlist_prtctl_t pctl, void *private,
 /*ARGSUSED*/
 static int
 nvaprint_nvlist_array(nvlist_prtctl_t pctl, void *private,
-    nvlist_t *nvl, const char *name, nvlist_t **valuep, uint_t count)
+    nvlist_t *nvl, const char *name, nvlist_t **valuep, uint32_t count)
 {
 	FILE *fp = pctl->nvprt_fp;
-	uint_t i;
+	uint32_t i;
 
 	indent(pctl, 1);
 	(void) fprintf(fp, "%s = (array of embedded nvlists)\n", name);
@@ -446,7 +446,7 @@ NVLIST_PRINTCTL_REPLACE(nvlist, nvlist_t *)
 void \
 nvlist_prtctlop_##type(nvlist_prtctl_t pctl, \
     int (*func)(nvlist_prtctl_t, void *, nvlist_t *, const char *, vtype, \
-    uint_t), void *private) \
+    uint32_t), void *private) \
 { \
 	CUSTPRTOP(pctl, type) = func; \
 	CUSTPRTOPARG(pctl, type) = private; \
@@ -565,7 +565,7 @@ nvlist_print_with_indent(nvlist_t *nvl, nvlist_prtctl_t pctl)
 {
 	FILE *fp = pctl->nvprt_fp;
 	char *name;
-	uint_t nelem;
+	uint32_t nelem;
 	nvpair_t *nvp;
 
 	if (nvl == NULL)
@@ -775,7 +775,7 @@ nvlist_prt(nvlist_t *nvl, nvlist_prtctl_t pctl)
 }
 
 #define	NVPA(elem, type, vtype, ptype, format) { \
-	uint_t	i, count; \
+	uint32_t	i, count; \
 	vtype	*value;  \
 \
 	(void) nvpair_value_##type(elem, &value, &count); \
@@ -795,7 +795,7 @@ dump_nvlist(nvlist_t *list, int indent)
 	boolean_t	bool_value;
 	nvlist_t	*nvlist_value;
 	nvlist_t	**nvlist_array_value;
-	uint_t		i, count;
+	uint32_t		i, count;
 
 	if (list == NULL) {
 		return;
@@ -947,7 +947,7 @@ nvpair_value_match_regex(nvpair_t *nvp, int ai,
     char *value, regex_t *value_regex, char **ep)
 {
 	char	*evalue;
-	uint_t	a_len;
+	uint32_t	a_len;
 	int	sr;
 
 	if (ep)
