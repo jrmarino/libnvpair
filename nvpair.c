@@ -445,16 +445,16 @@ i_validate_nvpair_value(data_type_t type, uint32_t nelem, const void *data)
 {
 	switch (type) {
 	case DATA_TYPE_BOOLEAN_VALUE:
-		if (*(boolean_t *)data != B_TRUE &&
-		    *(boolean_t *)data != B_FALSE)
+		if (*(bool *)data != true &&
+		    *(bool *)data != false)
 			return (EINVAL);
 		break;
 	case DATA_TYPE_BOOLEAN_ARRAY: {
 		int i;
 
 		for (i = 0; i < nelem; i++)
-			if (((boolean_t *)data)[i] != B_TRUE &&
-			    ((boolean_t *)data)[i] != B_FALSE)
+			if (((bool *)data)[i] != true &&
+			    ((bool *)data)[i] != false)
 				return (EINVAL);
 		break;
 	}
@@ -716,7 +716,7 @@ i_get_value_size(data_type_t type, const void *data, uint32_t nelem)
 		value_sz = 0;
 		break;
 	case DATA_TYPE_BOOLEAN_VALUE:
-		value_sz = sizeof (boolean_t);
+		value_sz = sizeof (bool);
 		break;
 	case DATA_TYPE_BYTE:
 		value_sz = sizeof (u_char);
@@ -755,7 +755,7 @@ i_get_value_size(data_type_t type, const void *data, uint32_t nelem)
 			value_sz = strlen(data) + 1;
 		break;
 	case DATA_TYPE_BOOLEAN_ARRAY:
-		value_sz = (uint64_t)nelem * sizeof (boolean_t);
+		value_sz = (uint64_t)nelem * sizeof (bool);
 		break;
 	case DATA_TYPE_BYTE_ARRAY:
 		value_sz = (uint64_t)nelem * sizeof (u_char);
@@ -973,7 +973,7 @@ nvlist_add_boolean(nvlist_t *nvl, const char *name)
 }
 
 int
-nvlist_add_boolean_value(nvlist_t *nvl, const char *name, boolean_t val)
+nvlist_add_boolean_value(nvlist_t *nvl, const char *name, bool val)
 {
 	return (nvlist_add_common(nvl, name, DATA_TYPE_BOOLEAN_VALUE, 1, &val));
 }
@@ -1046,7 +1046,7 @@ nvlist_add_string(nvlist_t *nvl, const char *name, const char *val)
 
 int
 nvlist_add_boolean_array(nvlist_t *nvl, const char *name,
-    boolean_t *a, uint32_t n)
+    bool *a, uint32_t n)
 {
 	return (nvlist_add_common(nvl, name, DATA_TYPE_BOOLEAN_ARRAY, n, a));
 }
@@ -1184,14 +1184,14 @@ nvlist_prev_nvpair(nvlist_t *nvl, nvpair_t *nvp)
 	return (curr != NULL ? &curr->nvi_nvp : NULL);
 }
 
-boolean_t
+bool
 nvlist_empty(nvlist_t *nvl)
 {
 	nvpriv_t *priv;
 
 	if (nvl == NULL ||
 	    (priv = (nvpriv_t *)(uintptr_t)nvl->nvl_priv) == NULL)
-		return (B_TRUE);
+		return (true);
 
 	return (priv->nvp_list == NULL);
 }
@@ -1333,7 +1333,7 @@ nvlist_lookup_boolean(nvlist_t *nvl, const char *name)
 }
 
 int
-nvlist_lookup_boolean_value(nvlist_t *nvl, const char *name, boolean_t *val)
+nvlist_lookup_boolean_value(nvlist_t *nvl, const char *name, bool *val)
 {
 	return (nvlist_lookup_common(nvl, name,
 	    DATA_TYPE_BOOLEAN_VALUE, NULL, val));
@@ -1413,7 +1413,7 @@ nvlist_lookup_nvlist(nvlist_t *nvl, const char *name, nvlist_t **val)
 
 int
 nvlist_lookup_boolean_array(nvlist_t *nvl, const char *name,
-    boolean_t **a, uint32_t *n)
+    bool **a, uint32_t *n)
 {
 	return (nvlist_lookup_common(nvl, name,
 	    DATA_TYPE_BOOLEAN_ARRAY, n, a));
@@ -1761,7 +1761,7 @@ int nvlist_lookup_nvpair_embedded_index(nvlist_t *nvl,
 	return (nvlist_lookup_nvpair_ei_sep(nvl, name, '.', ret, ip, ep));
 }
 
-boolean_t
+bool
 nvlist_exists(nvlist_t *nvl, const char *name)
 {
 	nvpriv_t *priv;
@@ -1770,20 +1770,20 @@ nvlist_exists(nvlist_t *nvl, const char *name)
 
 	if (name == NULL || nvl == NULL ||
 	    (priv = (nvpriv_t *)(uintptr_t)nvl->nvl_priv) == NULL)
-		return (B_FALSE);
+		return (false);
 
 	for (curr = priv->nvp_list; curr != NULL; curr = curr->nvi_next) {
 		nvp = &curr->nvi_nvp;
 
 		if (strcmp(name, NVP_NAME(nvp)) == 0)
-			return (B_TRUE);
+			return (true);
 	}
 
-	return (B_FALSE);
+	return (false);
 }
 
 int
-nvpair_value_boolean_value(nvpair_t *nvp, boolean_t *val)
+nvpair_value_boolean_value(nvpair_t *nvp, bool *val)
 {
 	return (nvpair_value_common(nvp, DATA_TYPE_BOOLEAN_VALUE, NULL, val));
 }
@@ -1861,7 +1861,7 @@ nvpair_value_nvlist(nvpair_t *nvp, nvlist_t **val)
 }
 
 int
-nvpair_value_boolean_array(nvpair_t *nvp, boolean_t **val, uint32_t *nelem)
+nvpair_value_boolean_array(nvpair_t *nvp, bool **val, uint32_t *nelem)
 {
 	return (nvpair_value_common(nvp, DATA_TYPE_BOOLEAN_ARRAY, nelem, val));
 }

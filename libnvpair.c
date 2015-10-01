@@ -59,7 +59,7 @@
 
 struct nvlist_printops {
 	DEFINEOP(print_boolean, int);
-	DEFINEOP(print_boolean_value, boolean_t);
+	DEFINEOP(print_boolean_value, bool);
 	DEFINEOP(print_byte, u_char);
 	DEFINEOP(print_int8, int8_t);
 	DEFINEOP(print_uint8, uint8_t);
@@ -73,7 +73,7 @@ struct nvlist_printops {
 	DEFINEOP(print_string, char *);
 	DEFINEOP(print_hrtime, hrtime_t);
 	DEFINEOP(print_nvlist, nvlist_t *);
-	DEFINEARROP(print_boolean_array, boolean_t *);
+	DEFINEARROP(print_boolean_array, bool *);
 	DEFINEARROP(print_byte_array, u_char *);
 	DEFINEARROP(print_int8_array, int8_t *);
 	DEFINEARROP(print_uint8_array, uint8_t *);
@@ -200,7 +200,7 @@ nvprint_##type_and_variant(nvlist_prtctl_t pctl, void *private, \
 }
 
 NVLIST_PRTFUNC(boolean, int, int, "%d")
-NVLIST_PRTFUNC(boolean_value, boolean_t, int, "%d")
+NVLIST_PRTFUNC(boolean_value, bool, int, "%d")
 NVLIST_PRTFUNC(byte, u_char, u_char, "0x%2.2x")
 NVLIST_PRTFUNC(int8, int8_t, int, "%d")
 NVLIST_PRTFUNC(uint8, uint8_t, uint8_t, "0x%x")
@@ -241,7 +241,7 @@ nvaprint_##type_and_variant(nvlist_prtctl_t pctl, void *private, \
 	return (1); \
 }
 
-NVLIST_ARRPRTFUNC(boolean_array, boolean_t, boolean_t, "%d")
+NVLIST_ARRPRTFUNC(boolean_array, bool, bool, "%d")
 NVLIST_ARRPRTFUNC(byte_array, u_char, u_char, "0x%2.2x")
 NVLIST_ARRPRTFUNC(int8_array, int8_t, int8_t, "%d")
 NVLIST_ARRPRTFUNC(uint8_array, uint8_t, uint8_t, "0x%x")
@@ -427,7 +427,7 @@ nvlist_prtctlop_##type(nvlist_prtctl_t pctl, \
 }
 
 NVLIST_PRINTCTL_REPLACE(boolean, int)
-NVLIST_PRINTCTL_REPLACE(boolean_value, boolean_t)
+NVLIST_PRINTCTL_REPLACE(boolean_value, bool)
 NVLIST_PRINTCTL_REPLACE(byte, u_char)
 NVLIST_PRINTCTL_REPLACE(int8, int8_t)
 NVLIST_PRINTCTL_REPLACE(uint8, uint8_t)
@@ -452,7 +452,7 @@ nvlist_prtctlop_##type(nvlist_prtctl_t pctl, \
 	CUSTPRTOPARG(pctl, type) = private; \
 }
 
-NVLIST_PRINTCTL_AREPLACE(boolean_array, boolean_t *)
+NVLIST_PRINTCTL_AREPLACE(boolean_array, bool *)
 NVLIST_PRINTCTL_AREPLACE(byte_array, u_char *)
 NVLIST_PRINTCTL_AREPLACE(int8_array, int8_t *)
 NVLIST_PRINTCTL_AREPLACE(uint8_array, uint8_t *)
@@ -588,7 +588,7 @@ nvlist_print_with_indent(nvlist_t *nvl, nvlist_prtctl_t pctl)
 			break;
 		}
 		case DATA_TYPE_BOOLEAN_VALUE: {
-			boolean_t val;
+			bool val;
 			(void) nvpair_value_boolean_value(nvp, &val);
 			RENDER(pctl, boolean_value, nvl, name, val);
 			break;
@@ -660,7 +660,7 @@ nvlist_print_with_indent(nvlist_t *nvl, nvlist_prtctl_t pctl)
 			break;
 		}
 		case DATA_TYPE_BOOLEAN_ARRAY: {
-			boolean_t *val;
+			bool *val;
 			(void) nvpair_value_boolean_array(nvp, &val, &nelem);
 			ARENDER(pctl, boolean_array, nvl, name, val, nelem);
 			break;
@@ -792,7 +792,7 @@ void
 dump_nvlist(nvlist_t *list, int indent)
 {
 	nvpair_t	*elem = NULL;
-	boolean_t	bool_value;
+	bool	bool_value;
 	nvlist_t	*nvlist_value;
 	nvlist_t	**nvlist_array_value;
 	uint32_t		i, count;
@@ -1217,9 +1217,9 @@ nvpair_value_match_regex(nvpair_t *nvp, int ai,
 	}
 	case DATA_TYPE_BOOLEAN_VALUE: {
 		uint32_t val_arg;
-		boolean_t val;
+		bool val;
 
-		/* scanf boolean_t from value and check for match */
+		/* scanf bool from value and check for match */
 		sr = sscanf(value, "%"SCNi32, &val_arg);
 		if ((sr == 1) &&
 		    (nvpair_value_boolean_value(nvp, &val) == 0) &&
@@ -1228,7 +1228,7 @@ nvpair_value_match_regex(nvpair_t *nvp, int ai,
 		break;
 	}
 	case DATA_TYPE_BOOLEAN_ARRAY: {
-		boolean_t *val_array;
+		bool *val_array;
 		uint32_t val_arg;
 
 		/* check indexed value of array for match */

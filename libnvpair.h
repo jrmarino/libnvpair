@@ -142,7 +142,7 @@ extern void nvlist_prtctl_dofmt(nvlist_prtctl_t, enum nvlist_prtctl_fmt, ...);
     void *)
 
 NVLIST_PRINTCTL_SVDECL(nvlist_prtctlop_boolean, int);
-NVLIST_PRINTCTL_SVDECL(nvlist_prtctlop_boolean_value, boolean_t);
+NVLIST_PRINTCTL_SVDECL(nvlist_prtctlop_boolean_value, bool);
 NVLIST_PRINTCTL_SVDECL(nvlist_prtctlop_byte, u_char);
 NVLIST_PRINTCTL_SVDECL(nvlist_prtctlop_int8, int8_t);
 NVLIST_PRINTCTL_SVDECL(nvlist_prtctlop_uint8, uint8_t);
@@ -172,7 +172,7 @@ NVLIST_PRINTCTL_SVDECL(nvlist_prtctlop_nvlist, nvlist_t *);
     int (*)(nvlist_prtctl_t, void *, nvlist_t *, const char *, vtype, uint32_t), \
     void *)
 
-NVLIST_PRINTCTL_AVDECL(nvlist_prtctlop_boolean_array, boolean_t *);
+NVLIST_PRINTCTL_AVDECL(nvlist_prtctlop_boolean_array, bool *);
 NVLIST_PRINTCTL_AVDECL(nvlist_prtctlop_byte_array, u_char *);
 NVLIST_PRINTCTL_AVDECL(nvlist_prtctlop_int8_array, int8_t *);
 NVLIST_PRINTCTL_AVDECL(nvlist_prtctlop_uint8_array, uint8_t *);

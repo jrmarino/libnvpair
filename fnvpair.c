@@ -131,7 +131,7 @@ fnvlist_add_boolean(nvlist_t *nvl, const char *name)
 }
 
 void
-fnvlist_add_boolean_value(nvlist_t *nvl, const char *name, boolean_t val)
+fnvlist_add_boolean_value(nvlist_t *nvl, const char *name, bool val)
 {
 	VERIFY0(nvlist_add_boolean_value(nvl, name, val));
 }
@@ -210,7 +210,7 @@ fnvlist_add_nvpair(nvlist_t *nvl, nvpair_t *pair)
 
 void
 fnvlist_add_boolean_array(nvlist_t *nvl, const char *name,
-    boolean_t *val, uint32_t n)
+    bool *val, uint32_t n)
 {
 	VERIFY0(nvlist_add_boolean_array(nvl, name, val, n));
 }
@@ -306,17 +306,17 @@ fnvlist_lookup_nvpair(nvlist_t *nvl, const char *name)
 	return (rv);
 }
 
-/* returns B_TRUE if the entry exists */
-boolean_t
+/* returns true if the entry exists */
+bool
 fnvlist_lookup_boolean(nvlist_t *nvl, const char *name)
 {
 	return (nvlist_lookup_boolean(nvl, name) == 0);
 }
 
-boolean_t
+bool
 fnvlist_lookup_boolean_value(nvlist_t *nvl, const char *name)
 {
-	boolean_t rv;
+	bool rv;
 	VERIFY0(nvlist_lookup_boolean_value(nvl, name, &rv));
 	return (rv);
 }
@@ -409,10 +409,10 @@ fnvlist_lookup_nvlist(nvlist_t *nvl, const char *name)
 	return (rv);
 }
 
-boolean_t
+bool
 fnvpair_value_boolean_value(nvpair_t *nvp)
 {
-	boolean_t rv;
+	bool rv;
 	VERIFY0(nvpair_value_boolean_value(nvp, &rv));
 	return (rv);
 }

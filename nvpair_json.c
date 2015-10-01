@@ -118,7 +118,7 @@ int
 nvlist_print_json(FILE *fp, nvlist_t *nvl)
 {
 	nvpair_t *curr;
-	boolean_t first = B_TRUE;
+	bool first = true;
 
 	FPRINTF(fp, "{");
 
@@ -129,7 +129,7 @@ nvlist_print_json(FILE *fp, nvlist_t *nvl)
 		if (!first)
 			FPRINTF(fp, ",");
 		else
-			first = B_FALSE;
+			first = false;
 
 		if (nvlist_print_json_string(fp, nvpair_name(curr)) == -1)
 			return (-1);
@@ -150,7 +150,7 @@ nvlist_print_json(FILE *fp, nvlist_t *nvl)
 
 		case DATA_TYPE_BOOLEAN_VALUE: {
 			FPRINTF(fp, "%s", fnvpair_value_boolean_value(curr) ==
-			    B_TRUE ? "true" : "false");
+			    true ? "true" : "false");
 			break;
 		}
 
@@ -253,14 +253,14 @@ nvlist_print_json(FILE *fp, nvlist_t *nvl)
 		}
 
 		case DATA_TYPE_BOOLEAN_ARRAY: {
-			boolean_t *val;
+			bool *val;
 			uint32_t valsz, i;
 			ASSERT(nvpair_value_boolean_array(curr, &val, &valsz) == 0);
 			FPRINTF(fp, "[");
 			for (i = 0; i < valsz; i++) {
 				if (i > 0)
 					FPRINTF(fp, ",");
-				FPRINTF(fp, val[i] == B_TRUE ?
+				FPRINTF(fp, val[i] == true ?
 				    "true" : "false");
 			}
 			FPRINTF(fp, "]");

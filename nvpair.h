@@ -26,11 +26,11 @@
 #ifndef	_SYS_NVPAIR_H
 #define	_SYS_NVPAIR_H
 
+#include <stdbool.h>
 #include <sys/types.h>
 #include <sys/time.h>
 #include <sys/errno.h>
 #include <stdarg.h>
-#include "nvpair_type_compat.h"
 
 __BEGIN_DECLS
 
@@ -158,7 +158,7 @@ nv_alloc_t *nvlist_lookup_nv_alloc(nvlist_t *);
 
 int nvlist_add_nvpair(nvlist_t *, nvpair_t *);
 int nvlist_add_boolean(nvlist_t *, const char *);
-int nvlist_add_boolean_value(nvlist_t *, const char *, boolean_t);
+int nvlist_add_boolean_value(nvlist_t *, const char *, bool);
 int nvlist_add_byte(nvlist_t *, const char *, u_char);
 int nvlist_add_int8(nvlist_t *, const char *, int8_t);
 int nvlist_add_uint8(nvlist_t *, const char *, uint8_t);
@@ -170,7 +170,7 @@ int nvlist_add_int64(nvlist_t *, const char *, int64_t);
 int nvlist_add_uint64(nvlist_t *, const char *, uint64_t);
 int nvlist_add_string(nvlist_t *, const char *, const char *);
 int nvlist_add_nvlist(nvlist_t *, const char *, nvlist_t *);
-int nvlist_add_boolean_array(nvlist_t *, const char *, boolean_t *, uint32_t);
+int nvlist_add_boolean_array(nvlist_t *, const char *, bool *, uint32_t);
 int nvlist_add_byte_array(nvlist_t *, const char *, u_char *, uint32_t);
 int nvlist_add_int8_array(nvlist_t *, const char *, int8_t *, uint32_t);
 int nvlist_add_uint8_array(nvlist_t *, const char *, uint8_t *, uint32_t);
@@ -190,7 +190,7 @@ int nvlist_remove_all(nvlist_t *, const char *);
 int nvlist_remove_nvpair(nvlist_t *, nvpair_t *);
 
 int nvlist_lookup_boolean(nvlist_t *, const char *);
-int nvlist_lookup_boolean_value(nvlist_t *, const char *, boolean_t *);
+int nvlist_lookup_boolean_value(nvlist_t *, const char *, bool *);
 int nvlist_lookup_byte(nvlist_t *, const char *, u_char *);
 int nvlist_lookup_int8(nvlist_t *, const char *, int8_t *);
 int nvlist_lookup_uint8(nvlist_t *, const char *, uint8_t *);
@@ -203,7 +203,7 @@ int nvlist_lookup_uint64(nvlist_t *, const char *, uint64_t *);
 int nvlist_lookup_string(nvlist_t *, const char *, char **);
 int nvlist_lookup_nvlist(nvlist_t *, const char *, nvlist_t **);
 int nvlist_lookup_boolean_array(nvlist_t *, const char *,
-    boolean_t **, uint32_t *);
+    bool **, uint32_t *);
 int nvlist_lookup_byte_array(nvlist_t *, const char *, u_char **, uint32_t *);
 int nvlist_lookup_int8_array(nvlist_t *, const char *, int8_t **, uint32_t *);
 int nvlist_lookup_uint8_array(nvlist_t *, const char *, uint8_t **, uint32_t *);
@@ -223,8 +223,8 @@ int nvlist_lookup_double(nvlist_t *, const char *, double *);
 int nvlist_lookup_nvpair(nvlist_t *, const char *, nvpair_t **);
 int nvlist_lookup_nvpair_embedded_index(nvlist_t *, const char *, nvpair_t **,
     int *, char **);
-boolean_t nvlist_exists(nvlist_t *, const char *);
-boolean_t nvlist_empty(nvlist_t *);
+bool nvlist_exists(nvlist_t *, const char *);
+bool nvlist_empty(nvlist_t *);
 
 /* processing nvpair */
 nvpair_t *nvlist_next_nvpair(nvlist_t *, nvpair_t *);
@@ -232,7 +232,7 @@ nvpair_t *nvlist_prev_nvpair(nvlist_t *, nvpair_t *);
 char *nvpair_name(nvpair_t *);
 data_type_t nvpair_type(nvpair_t *);
 int nvpair_type_is_array(nvpair_t *);
-int nvpair_value_boolean_value(nvpair_t *, boolean_t *);
+int nvpair_value_boolean_value(nvpair_t *, bool *);
 int nvpair_value_byte(nvpair_t *, u_char *);
 int nvpair_value_int8(nvpair_t *, int8_t *);
 int nvpair_value_uint8(nvpair_t *, uint8_t *);
@@ -244,7 +244,7 @@ int nvpair_value_int64(nvpair_t *, int64_t *);
 int nvpair_value_uint64(nvpair_t *, uint64_t *);
 int nvpair_value_string(nvpair_t *, char **);
 int nvpair_value_nvlist(nvpair_t *, nvlist_t **);
-int nvpair_value_boolean_array(nvpair_t *, boolean_t **, uint32_t *);
+int nvpair_value_boolean_array(nvpair_t *, bool **, uint32_t *);
 int nvpair_value_byte_array(nvpair_t *, u_char **, uint32_t *);
 int nvpair_value_int8_array(nvpair_t *, int8_t **, uint32_t *);
 int nvpair_value_uint8_array(nvpair_t *, uint8_t **, uint32_t *);
@@ -270,7 +270,7 @@ void fnvlist_merge(nvlist_t *, nvlist_t *);
 size_t fnvlist_num_pairs(nvlist_t *);
 
 void fnvlist_add_boolean(nvlist_t *, const char *);
-void fnvlist_add_boolean_value(nvlist_t *, const char *, boolean_t);
+void fnvlist_add_boolean_value(nvlist_t *, const char *, bool);
 void fnvlist_add_byte(nvlist_t *, const char *, u_char);
 void fnvlist_add_int8(nvlist_t *, const char *, int8_t);
 void fnvlist_add_uint8(nvlist_t *, const char *, uint8_t);
@@ -283,7 +283,7 @@ void fnvlist_add_uint64(nvlist_t *, const char *, uint64_t);
 void fnvlist_add_string(nvlist_t *, const char *, const char *);
 void fnvlist_add_nvlist(nvlist_t *, const char *, nvlist_t *);
 void fnvlist_add_nvpair(nvlist_t *, nvpair_t *);
-void fnvlist_add_boolean_array(nvlist_t *, const char *, boolean_t *, uint32_t);
+void fnvlist_add_boolean_array(nvlist_t *, const char *, bool *, uint32_t);
 void fnvlist_add_byte_array(nvlist_t *, const char *, u_char *, uint32_t);
 void fnvlist_add_int8_array(nvlist_t *, const char *, int8_t *, uint32_t);
 void fnvlist_add_uint8_array(nvlist_t *, const char *, uint8_t *, uint32_t);
@@ -300,8 +300,8 @@ void fnvlist_remove(nvlist_t *, const char *);
 void fnvlist_remove_nvpair(nvlist_t *, nvpair_t *);
 
 nvpair_t *fnvlist_lookup_nvpair(nvlist_t *nvl, const char *name);
-boolean_t fnvlist_lookup_boolean(nvlist_t *nvl, const char *name);
-boolean_t fnvlist_lookup_boolean_value(nvlist_t *nvl, const char *name);
+bool fnvlist_lookup_boolean(nvlist_t *nvl, const char *name);
+bool fnvlist_lookup_boolean_value(nvlist_t *nvl, const char *name);
 u_char fnvlist_lookup_byte(nvlist_t *nvl, const char *name);
 int8_t fnvlist_lookup_int8(nvlist_t *nvl, const char *name);
 int16_t fnvlist_lookup_int16(nvlist_t *nvl, const char *name);
@@ -314,7 +314,7 @@ uint64_t fnvlist_lookup_uint64(nvlist_t *nvl, const char *name);
 char *fnvlist_lookup_string(nvlist_t *nvl, const char *name);
 nvlist_t *fnvlist_lookup_nvlist(nvlist_t *nvl, const char *name);
 
-boolean_t fnvpair_value_boolean_value(nvpair_t *nvp);
+bool fnvpair_value_boolean_value(nvpair_t *nvp);
 u_char fnvpair_value_byte(nvpair_t *nvp);
 int8_t fnvpair_value_int8(nvpair_t *nvp);
 int16_t fnvpair_value_int16(nvpair_t *nvp);
