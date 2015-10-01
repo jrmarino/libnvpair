@@ -719,7 +719,7 @@ i_get_value_size(data_type_t type, const void *data, uint32_t nelem)
 		value_sz = sizeof (boolean_t);
 		break;
 	case DATA_TYPE_BYTE:
-		value_sz = sizeof (uchar_t);
+		value_sz = sizeof (u_char);
 		break;
 	case DATA_TYPE_INT8:
 		value_sz = sizeof (int8_t);
@@ -758,7 +758,7 @@ i_get_value_size(data_type_t type, const void *data, uint32_t nelem)
 		value_sz = (uint64_t)nelem * sizeof (boolean_t);
 		break;
 	case DATA_TYPE_BYTE_ARRAY:
-		value_sz = (uint64_t)nelem * sizeof (uchar_t);
+		value_sz = (uint64_t)nelem * sizeof (u_char);
 		break;
 	case DATA_TYPE_INT8_ARRAY:
 		value_sz = (uint64_t)nelem * sizeof (int8_t);
@@ -979,7 +979,7 @@ nvlist_add_boolean_value(nvlist_t *nvl, const char *name, boolean_t val)
 }
 
 int
-nvlist_add_byte(nvlist_t *nvl, const char *name, uchar_t val)
+nvlist_add_byte(nvlist_t *nvl, const char *name, u_char val)
 {
 	return (nvlist_add_common(nvl, name, DATA_TYPE_BYTE, 1, &val));
 }
@@ -1052,7 +1052,7 @@ nvlist_add_boolean_array(nvlist_t *nvl, const char *name,
 }
 
 int
-nvlist_add_byte_array(nvlist_t *nvl, const char *name, uchar_t *a, uint32_t n)
+nvlist_add_byte_array(nvlist_t *nvl, const char *name, u_char *a, uint32_t n)
 {
 	return (nvlist_add_common(nvl, name, DATA_TYPE_BYTE_ARRAY, n, a));
 }
@@ -1340,7 +1340,7 @@ nvlist_lookup_boolean_value(nvlist_t *nvl, const char *name, boolean_t *val)
 }
 
 int
-nvlist_lookup_byte(nvlist_t *nvl, const char *name, uchar_t *val)
+nvlist_lookup_byte(nvlist_t *nvl, const char *name, u_char *val)
 {
 	return (nvlist_lookup_common(nvl, name, DATA_TYPE_BYTE, NULL, val));
 }
@@ -1421,7 +1421,7 @@ nvlist_lookup_boolean_array(nvlist_t *nvl, const char *name,
 
 int
 nvlist_lookup_byte_array(nvlist_t *nvl, const char *name,
-    uchar_t **a, uint32_t *n)
+    u_char **a, uint32_t *n)
 {
 	return (nvlist_lookup_common(nvl, name, DATA_TYPE_BYTE_ARRAY, n, a));
 }
@@ -1789,7 +1789,7 @@ nvpair_value_boolean_value(nvpair_t *nvp, boolean_t *val)
 }
 
 int
-nvpair_value_byte(nvpair_t *nvp, uchar_t *val)
+nvpair_value_byte(nvpair_t *nvp, u_char *val)
 {
 	return (nvpair_value_common(nvp, DATA_TYPE_BYTE, NULL, val));
 }
@@ -1867,7 +1867,7 @@ nvpair_value_boolean_array(nvpair_t *nvp, boolean_t **val, uint32_t *nelem)
 }
 
 int
-nvpair_value_byte_array(nvpair_t *nvp, uchar_t **val, uint32_t *nelem)
+nvpair_value_byte_array(nvpair_t *nvp, u_char **val, uint32_t *nelem)
 {
 	return (nvpair_value_common(nvp, DATA_TYPE_BYTE_ARRAY, nelem, val));
 }

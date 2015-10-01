@@ -137,7 +137,7 @@ fnvlist_add_boolean_value(nvlist_t *nvl, const char *name, boolean_t val)
 }
 
 void
-fnvlist_add_byte(nvlist_t *nvl, const char *name, uchar_t val)
+fnvlist_add_byte(nvlist_t *nvl, const char *name, u_char val)
 {
 	VERIFY0(nvlist_add_byte(nvl, name, val));
 }
@@ -216,7 +216,7 @@ fnvlist_add_boolean_array(nvlist_t *nvl, const char *name,
 }
 
 void
-fnvlist_add_byte_array(nvlist_t *nvl, const char *name, uchar_t *val, uint32_t n)
+fnvlist_add_byte_array(nvlist_t *nvl, const char *name, u_char *val, uint32_t n)
 {
 	VERIFY0(nvlist_add_byte_array(nvl, name, val, n));
 }
@@ -321,10 +321,10 @@ fnvlist_lookup_boolean_value(nvlist_t *nvl, const char *name)
 	return (rv);
 }
 
-uchar_t
+u_char
 fnvlist_lookup_byte(nvlist_t *nvl, const char *name)
 {
-	uchar_t rv;
+	u_char rv;
 	VERIFY0(nvlist_lookup_byte(nvl, name, &rv));
 	return (rv);
 }
@@ -417,10 +417,10 @@ fnvpair_value_boolean_value(nvpair_t *nvp)
 	return (rv);
 }
 
-uchar_t
+u_char
 fnvpair_value_byte(nvpair_t *nvp)
 {
-	uchar_t rv;
+	u_char rv;
 	VERIFY0(nvpair_value_byte(nvp, &rv));
 	return (rv);
 }

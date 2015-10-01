@@ -60,7 +60,7 @@
 struct nvlist_printops {
 	DEFINEOP(print_boolean, int);
 	DEFINEOP(print_boolean_value, boolean_t);
-	DEFINEOP(print_byte, uchar_t);
+	DEFINEOP(print_byte, u_char);
 	DEFINEOP(print_int8, int8_t);
 	DEFINEOP(print_uint8, uint8_t);
 	DEFINEOP(print_int16, int16_t);
@@ -74,7 +74,7 @@ struct nvlist_printops {
 	DEFINEOP(print_hrtime, hrtime_t);
 	DEFINEOP(print_nvlist, nvlist_t *);
 	DEFINEARROP(print_boolean_array, boolean_t *);
-	DEFINEARROP(print_byte_array, uchar_t *);
+	DEFINEARROP(print_byte_array, u_char *);
 	DEFINEARROP(print_int8_array, int8_t *);
 	DEFINEARROP(print_uint8_array, uint8_t *);
 	DEFINEARROP(print_int16_array, int16_t *);
@@ -201,7 +201,7 @@ nvprint_##type_and_variant(nvlist_prtctl_t pctl, void *private, \
 
 NVLIST_PRTFUNC(boolean, int, int, "%d")
 NVLIST_PRTFUNC(boolean_value, boolean_t, int, "%d")
-NVLIST_PRTFUNC(byte, uchar_t, uchar_t, "0x%2.2x")
+NVLIST_PRTFUNC(byte, u_char, u_char, "0x%2.2x")
 NVLIST_PRTFUNC(int8, int8_t, int, "%d")
 NVLIST_PRTFUNC(uint8, uint8_t, uint8_t, "0x%x")
 NVLIST_PRTFUNC(int16, int16_t, int16_t, "%d")
@@ -242,7 +242,7 @@ nvaprint_##type_and_variant(nvlist_prtctl_t pctl, void *private, \
 }
 
 NVLIST_ARRPRTFUNC(boolean_array, boolean_t, boolean_t, "%d")
-NVLIST_ARRPRTFUNC(byte_array, uchar_t, uchar_t, "0x%2.2x")
+NVLIST_ARRPRTFUNC(byte_array, u_char, u_char, "0x%2.2x")
 NVLIST_ARRPRTFUNC(int8_array, int8_t, int8_t, "%d")
 NVLIST_ARRPRTFUNC(uint8_array, uint8_t, uint8_t, "0x%x")
 NVLIST_ARRPRTFUNC(int16_array, int16_t, int16_t, "%d")
@@ -428,7 +428,7 @@ nvlist_prtctlop_##type(nvlist_prtctl_t pctl, \
 
 NVLIST_PRINTCTL_REPLACE(boolean, int)
 NVLIST_PRINTCTL_REPLACE(boolean_value, boolean_t)
-NVLIST_PRINTCTL_REPLACE(byte, uchar_t)
+NVLIST_PRINTCTL_REPLACE(byte, u_char)
 NVLIST_PRINTCTL_REPLACE(int8, int8_t)
 NVLIST_PRINTCTL_REPLACE(uint8, uint8_t)
 NVLIST_PRINTCTL_REPLACE(int16, int16_t)
@@ -453,7 +453,7 @@ nvlist_prtctlop_##type(nvlist_prtctl_t pctl, \
 }
 
 NVLIST_PRINTCTL_AREPLACE(boolean_array, boolean_t *)
-NVLIST_PRINTCTL_AREPLACE(byte_array, uchar_t *)
+NVLIST_PRINTCTL_AREPLACE(byte_array, u_char *)
 NVLIST_PRINTCTL_AREPLACE(int8_array, int8_t *)
 NVLIST_PRINTCTL_AREPLACE(uint8_array, uint8_t *)
 NVLIST_PRINTCTL_AREPLACE(int16_array, int16_t *)
@@ -594,7 +594,7 @@ nvlist_print_with_indent(nvlist_t *nvl, nvlist_prtctl_t pctl)
 			break;
 		}
 		case DATA_TYPE_BYTE: {
-			uchar_t val;
+			u_char val;
 			(void) nvpair_value_byte(nvp, &val);
 			RENDER(pctl, byte, nvl, name, val);
 			break;
@@ -666,7 +666,7 @@ nvlist_print_with_indent(nvlist_t *nvl, nvlist_prtctl_t pctl)
 			break;
 		}
 		case DATA_TYPE_BYTE_ARRAY: {
-			uchar_t *val;
+			u_char *val;
 			(void) nvpair_value_byte_array(nvp, &val, &nelem);
 			ARENDER(pctl, byte_array, nvl, name, val, nelem);
 			break;
@@ -814,7 +814,7 @@ dump_nvlist(nvlist_t *list, int indent)
 			break;
 
 		case DATA_TYPE_BYTE:
-			NVP(elem, byte, uchar_t, int, "%u");
+			NVP(elem, byte, u_char, int, "%u");
 			break;
 
 		case DATA_TYPE_INT8:
@@ -854,7 +854,7 @@ dump_nvlist(nvlist_t *list, int indent)
 			break;
 
 		case DATA_TYPE_BYTE_ARRAY:
-			NVPA(elem, byte_array, uchar_t, int, "%u");
+			NVPA(elem, byte_array, u_char, int, "%u");
 			break;
 
 		case DATA_TYPE_INT8_ARRAY:
@@ -1009,9 +1009,9 @@ nvpair_value_match_regex(nvpair_t *nvp, int ai,
 		break;
 	}
 	case DATA_TYPE_BYTE: {
-		uchar_t val, val_arg;
+		u_char val, val_arg;
 
-		/* scanf uchar_t from value and check for match */
+		/* scanf u_char from value and check for match */
 		sr = sscanf(value, "%c", &val_arg);
 		if ((sr == 1) && (nvpair_value_byte(nvp, &val) == 0) &&
 		    (val == val_arg))
@@ -1019,7 +1019,7 @@ nvpair_value_match_regex(nvpair_t *nvp, int ai,
 		break;
 	}
 	case DATA_TYPE_BYTE_ARRAY: {
-		uchar_t *val_array, val_arg;
+		u_char *val_array, val_arg;
 
 
 		/* check indexed value of array for match */

@@ -268,7 +268,7 @@ nvlist_print_json(FILE *fp, nvlist_t *nvl)
 		}
 
 		case DATA_TYPE_BYTE_ARRAY: {
-			uchar_t *val;
+			u_char *val;
 			uint32_t valsz, i;
 			ASSERT(nvpair_value_byte_array(curr, &val, &valsz) == 0);
 			FPRINTF(fp, "[");
