@@ -3,7 +3,7 @@
 #
 
 LIB=		nvpair
-SHLIB_MAJOR=	1
+SHLIB_MAJOR=	3
 SRCS=		fnvpair.c \
 		libnvpair.c \
 		nvpair_alloc_system.c \
