@@ -208,7 +208,7 @@ NVLIST_PRTFUNC(int16, int16_t, int16_t, "%d")
 NVLIST_PRTFUNC(uint16, uint16_t, uint16_t, "0x%x")
 NVLIST_PRTFUNC(int32, int32_t, int32_t, "%d")
 NVLIST_PRTFUNC(uint32, uint32_t, uint32_t, "0x%x")
-NVLIST_PRTFUNC(int64, int64_t, longlong_t, "%lld")
+NVLIST_PRTFUNC(int64, int64_t, int64_t, "%lld")
 NVLIST_PRTFUNC(uint64, uint64_t, uint64_t, "0x%llx")
 NVLIST_PRTFUNC(double, double, double, "0x%f")
 NVLIST_PRTFUNC(string, char *, char *, "%s")
@@ -249,7 +249,7 @@ NVLIST_ARRPRTFUNC(int16_array, int16_t, int16_t, "%d")
 NVLIST_ARRPRTFUNC(uint16_array, uint16_t, uint16_t, "0x%x")
 NVLIST_ARRPRTFUNC(int32_array, int32_t, int32_t, "%d")
 NVLIST_ARRPRTFUNC(uint32_array, uint32_t, uint32_t, "0x%x")
-NVLIST_ARRPRTFUNC(int64_array, int64_t, longlong_t, "%lld")
+NVLIST_ARRPRTFUNC(int64_array, int64_t, int64_t, "%lld")
 NVLIST_ARRPRTFUNC(uint64_array, uint64_t, uint64_t, "0x%llx")
 NVLIST_ARRPRTFUNC(string_array, char *, char *, "%s")
 
@@ -842,7 +842,7 @@ dump_nvlist(nvlist_t *list, int indent)
 			break;
 
 		case DATA_TYPE_INT64:
-			NVP(elem, int64, int64_t, longlong_t, "%lld");
+			NVP(elem, int64, int64_t, int64_t, "%lld");
 			break;
 
 		case DATA_TYPE_UINT64:
@@ -882,7 +882,7 @@ dump_nvlist(nvlist_t *list, int indent)
 			break;
 
 		case DATA_TYPE_INT64_ARRAY:
-			NVPA(elem, int64_array, int64_t, longlong_t, "%lld");
+			NVPA(elem, int64_array, int64_t, int64_t, "%lld");
 			break;
 
 		case DATA_TYPE_UINT64_ARRAY:

@@ -6,8 +6,7 @@
 #define	_TYPE_COMPAT_H
 
 typedef unsigned char	uchar_t;
-typedef	long long	longlong_t;
-typedef longlong_t	hrtime_t;
+typedef int64_t	hrtime_t;
 typedef unsigned long	ulong_t;
 typedef enum boolean { B_FALSE, B_TRUE } boolean_t;
 
