@@ -34,6 +34,8 @@
 
 __BEGIN_DECLS
 
+typedef int64_t	hrtime_t;
+
 typedef enum {
 	DATA_TYPE_UNKNOWN = 0,
 	DATA_TYPE_BOOLEAN,
